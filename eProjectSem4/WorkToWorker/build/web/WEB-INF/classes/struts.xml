@@ -39,5 +39,13 @@
         <action name="orderAction" class="wtw.ui.OrderAction">
             <result name="success">details.jsp</result>
         </action>
+        
+        <action name="showOrderAction" class="wtw.ui.ShowOrderAction">
+            <result name="success">showorder.jsp</result>
+        </action>
+        
+        <action name="agreeOrderAction" class="wtw.ui.AgreeOrderAction">
+            <result name="success">details.jsp</result>
+        </action>
     </package>
 </struts>
