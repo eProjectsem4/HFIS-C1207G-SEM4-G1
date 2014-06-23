@@ -1,0 +1,43 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Configuration for the default package. -->
+    <constant name="struts.multipart.maxSize" value="104857600" />
+    <package name="default" extends="struts-default">
+        <action name="createProjectAction" class="wtw.ui.CreateProjectAction">
+            <result name="success">createproject.jsp</result>
+            <result name="error">createproject.jsp</result>
+            <interceptor-ref name="defaultStack">
+                <param name="fileUpload.maximumSize">10485760</param>
+            </interceptor-ref>
+        </action>
+        
+        <action name="loginAction" class="wtw.ui.LoginAction">
+            <result name="error">index.jsp</result>
+            <result name="success" type="redirect">home.jsp</result>
+        </action>
+        
+        <action name="registerAction" class="wtw.ui.RegisterAction">
+            <result name="error">index.jsp</result>
+            <result name="success">index.jsp</result>
+        </action>
+        
+        <action name="allProjectAction" class="wtw.ui.AllProjectAction">
+            <result name="success">allproject.jsp</result>
+        </action>
+        
+        <action name="detailsAction" class="wtw.ui.DetailsAction">
+            <result name="success">details.jsp</result>
+        </action>
+        
+        <action name="doneProjectAction" class="wtw.ui.DoneProjectAction">
+            <result name="success">details.jsp</result>
+        </action>
+        
+        <action name="orderAction" class="wtw.ui.OrderAction">
+            <result name="success">details.jsp</result>
+        </action>
+    </package>
+</struts>
