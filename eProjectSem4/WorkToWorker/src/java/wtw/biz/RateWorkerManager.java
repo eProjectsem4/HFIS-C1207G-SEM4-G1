@@ -56,4 +56,18 @@ public class RateWorkerManager {
            Logger.getLogger(RateWorkerManager.class.getName()).log(Level.SEVERE, null, ex);
        }
    }
+   
+   public RateWorker getRated(Account customer,Account worker){
+       return getController().getRated(customer, worker);
+   }
+   
+   public void edit(RateWorker rw){
+       try {
+           getController().edit(rw);
+       } catch (RollbackFailureException ex) {
+           Logger.getLogger(RateWorkerManager.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (Exception ex) {
+           Logger.getLogger(RateWorkerManager.class.getName()).log(Level.SEVERE, null, ex);
+       }
+   }
 }

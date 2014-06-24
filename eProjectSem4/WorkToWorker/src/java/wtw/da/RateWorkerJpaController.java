@@ -38,6 +38,19 @@ public class RateWorkerJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
+    
+    public RateWorker getRated(Account customer,Account worker){
+          String queryString = "SELECT r FROM RateWorker r WHERE r.idWorker = :idWorker and r.idCustomer = :idCustomer";
+        TypedQuery<RateWorker> query = getEntityManager().createQuery(queryString, RateWorker.class);
+        query.setParameter("idWorker", worker);
+        query.setParameter("idCustomer", customer);
+        List<RateWorker> list = query.getResultList();
+        if(list.size() == 0){
+            return null;
+        }else{
+            return list.get(0);
+        }
+    }
 
      public float starWorker(Account worker){
         String queryString = "SELECT r FROM RateWorker r WHERE r.idWorker = :idWorker";

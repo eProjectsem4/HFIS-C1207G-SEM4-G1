@@ -7,6 +7,8 @@ package wtw.biz;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -15,6 +17,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.transaction.UserTransaction;
 import wtw.da.AccountJpaController;
+import wtw.da.exceptions.RollbackFailureException;
 import wtw.entities.Account;
 
 /**
@@ -58,6 +61,16 @@ public class AccountManager {
     
     public Account getById(int id){
         return getController().getById(id);
+    }
+    
+    public void edit(Account acc){
+        try {
+            getController().edit(acc);
+        } catch (RollbackFailureException ex) {
+            Logger.getLogger(AccountManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(AccountManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

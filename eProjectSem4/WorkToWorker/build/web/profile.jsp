@@ -42,7 +42,11 @@
         <h2>Rate</h2>
         Star : <s:property value="star"></s:property>
         <br>
-        <% if(!accLog.getRole().equals(accPro.getRole())){out.print("Rate : <a href='rateAction?star=1'>1 star</a>      <a href='rateAction?star=2'>2 star</a>      <a href='rateAction?star=3'>3 star</a>      <a href='rateAction?star=4'>4 star</a>      <a href='rateAction?star=5'>5 star</a>");}%>
+        <% if(!accLog.getRole().equals(accPro.getRole())){out.print("Rate : <a href='rateAction?starRate=1&id="+accPro.getId()+"'>1 star</a>      <a href='rateAction?starRate=2&id="+accPro.getId()+"'>2 star</a>      <a href='rateAction?starRate=3&id="+accPro.getId()+"'>3 star</a>      <a href='rateAction?starRate=4&id="+accPro.getId()+"'>4 star</a>      <a href='rateAction?starRate=5&id="+accPro.getId()+"'>5 star</a>");}%>
+         <s:iterator value="messRate">
+            <label style="color: red;"><s:property></s:property></label>
+            <br>
+        </s:iterator>
         <hr>
         <h2>Feedback</h2>
         <s:iterator value="listFeedCustomer">
@@ -55,8 +59,12 @@
         </s:iterator>
             <%
                 if(!accLog.getRole().equals(accPro.getRole())){
-                    out.print("<form action='feedbackAction'><input name='content'><input type='submit' value='Send Feedback'></form>");
+                    out.print("<form action='feedbackAction?id="+accPro.getId()+"'><input name='content'><input type='submit' value='Send Feedback'></form>");
                 }
             %>
+             <s:iterator value="messFeed">
+            <label style="color: red;"><s:property></s:property></label>
+            <br>
+        </s:iterator>
     </body>
 </html>

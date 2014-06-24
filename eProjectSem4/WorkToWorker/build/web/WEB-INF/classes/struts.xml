@@ -55,5 +55,13 @@
         <action name="editProfileAction" class="wtw.ui.EditProfileAction">
             <result name="success">editprofile.jsp</result>
         </action>
+        
+        <action name="updateProfileAction" class="wtw.ui.UpdateProfileAction">
+            <result name="success">editprofile.jsp</result>
+        </action>
+        
+         <action name="rateAction" class="wtw.ui.RateAction">
+            <result name="success">profile.jsp</result>
+        </action>
     </package>
 </struts>

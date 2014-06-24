@@ -18,7 +18,7 @@
             <label style="color: red;"><s:property></s:property></label>
             <br>
         </s:iterator>
-        <form action="updateProfile">
+        <form action="updateProfileAction">
             Full Name : <input name="fullname" value="<s:property value="accLog.fullname"></s:property>">
             <br>
             Phone : <input name="phone" value="<s:property value="accLog.phone"></s:property>">
