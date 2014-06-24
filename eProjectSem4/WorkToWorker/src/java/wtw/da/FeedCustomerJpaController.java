@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
@@ -36,6 +37,13 @@ public class FeedCustomerJpaController implements Serializable {
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
+    }
+    
+        public List<FeedCustomer> getFeedCustomer(Account customer){
+        String queryString = "SELECT f FROM FeedCustomer f WHERE f.idCustomer = :idCustomer";
+        TypedQuery<FeedCustomer> query = getEntityManager().createQuery(queryString, FeedCustomer.class);
+        query.setParameter("idCustomer", customer);
+        return query.getResultList();
     }
 
     public void create(FeedCustomer feedCustomer) throws PreexistingEntityException, RollbackFailureException, Exception {

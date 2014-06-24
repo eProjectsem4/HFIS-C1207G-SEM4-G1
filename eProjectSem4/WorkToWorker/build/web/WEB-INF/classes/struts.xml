@@ -47,5 +47,13 @@
         <action name="agreeOrderAction" class="wtw.ui.AgreeOrderAction">
             <result name="success">details.jsp</result>
         </action>
+        
+        <action name="Profile" class="wtw.ui.ProfileAction">
+            <result name="success">profile.jsp</result>
+        </action>
+        
+        <action name="editProfileAction" class="wtw.ui.EditProfileAction">
+            <result name="success">editprofile.jsp</result>
+        </action>
     </package>
 </struts>

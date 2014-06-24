@@ -125,8 +125,8 @@ public class ProjectJpaController implements Serializable {
             Account idWorkerNew = project.getIdWorker();
             Account idCustomerOld = persistentProject.getIdCustomer();
             Account idCustomerNew = project.getIdCustomer();
-            Collection<OrderProject> orderProjectCollectionOld = persistentProject.getOrderProjectCollection();
-            Collection<OrderProject> orderProjectCollectionNew = project.getOrderProjectCollection();
+           // Collection<OrderProject> orderProjectCollectionOld = persistentProject.getOrderProjectCollection();
+           // Collection<OrderProject> orderProjectCollectionNew = project.getOrderProjectCollection();
             if (idWorkerNew != null) {
                 idWorkerNew = em.getReference(idWorkerNew.getClass(), idWorkerNew.getId());
                 project.setIdWorker(idWorkerNew);
@@ -135,13 +135,13 @@ public class ProjectJpaController implements Serializable {
                 idCustomerNew = em.getReference(idCustomerNew.getClass(), idCustomerNew.getId());
                 project.setIdCustomer(idCustomerNew);
             }
-            Collection<OrderProject> attachedOrderProjectCollectionNew = new ArrayList<OrderProject>();
-            for (OrderProject orderProjectCollectionNewOrderProjectToAttach : orderProjectCollectionNew) {
-                orderProjectCollectionNewOrderProjectToAttach = em.getReference(orderProjectCollectionNewOrderProjectToAttach.getClass(), orderProjectCollectionNewOrderProjectToAttach.getId());
-                attachedOrderProjectCollectionNew.add(orderProjectCollectionNewOrderProjectToAttach);
-            }
-            orderProjectCollectionNew = attachedOrderProjectCollectionNew;
-            project.setOrderProjectCollection(orderProjectCollectionNew);
+          //  Collection<OrderProject> attachedOrderProjectCollectionNew = new ArrayList<OrderProject>();
+           // for (OrderProject orderProjectCollectionNewOrderProjectToAttach : orderProjectCollectionNew) {
+            //    orderProjectCollectionNewOrderProjectToAttach = em.getReference(orderProjectCollectionNewOrderProjectToAttach.getClass(), orderProjectCollectionNewOrderProjectToAttach.getId());
+           //     attachedOrderProjectCollectionNew.add(orderProjectCollectionNewOrderProjectToAttach);
+           // }
+           // orderProjectCollectionNew = attachedOrderProjectCollectionNew;
+         //   project.setOrderProjectCollection(orderProjectCollectionNew);
             project = em.merge(project);
             if (idWorkerOld != null && !idWorkerOld.equals(idWorkerNew)) {
                 idWorkerOld.getProjectCollection().remove(project);
@@ -159,23 +159,23 @@ public class ProjectJpaController implements Serializable {
                 idCustomerNew.getProjectCollection().add(project);
                 idCustomerNew = em.merge(idCustomerNew);
             }
-            for (OrderProject orderProjectCollectionOldOrderProject : orderProjectCollectionOld) {
-                if (!orderProjectCollectionNew.contains(orderProjectCollectionOldOrderProject)) {
-                    orderProjectCollectionOldOrderProject.setIdProject(null);
-                    orderProjectCollectionOldOrderProject = em.merge(orderProjectCollectionOldOrderProject);
-                }
-            }
-            for (OrderProject orderProjectCollectionNewOrderProject : orderProjectCollectionNew) {
-                if (!orderProjectCollectionOld.contains(orderProjectCollectionNewOrderProject)) {
-                    Project oldIdProjectOfOrderProjectCollectionNewOrderProject = orderProjectCollectionNewOrderProject.getIdProject();
-                    orderProjectCollectionNewOrderProject.setIdProject(project);
-                    orderProjectCollectionNewOrderProject = em.merge(orderProjectCollectionNewOrderProject);
-                    if (oldIdProjectOfOrderProjectCollectionNewOrderProject != null && !oldIdProjectOfOrderProjectCollectionNewOrderProject.equals(project)) {
-                        oldIdProjectOfOrderProjectCollectionNewOrderProject.getOrderProjectCollection().remove(orderProjectCollectionNewOrderProject);
-                        oldIdProjectOfOrderProjectCollectionNewOrderProject = em.merge(oldIdProjectOfOrderProjectCollectionNewOrderProject);
-                    }
-                }
-            }
+           // for (OrderProject orderProjectCollectionOldOrderProject : orderProjectCollectionOld) {
+           //     if (!orderProjectCollectionNew.contains(orderProjectCollectionOldOrderProject)) {
+            //        orderProjectCollectionOldOrderProject.setIdProject(null);
+             //       orderProjectCollectionOldOrderProject = em.merge(orderProjectCollectionOldOrderProject);
+            //    }
+          //  }
+          //  for (OrderProject orderProjectCollectionNewOrderProject : orderProjectCollectionNew) {
+            //    if (!orderProjectCollectionOld.contains(orderProjectCollectionNewOrderProject)) {
+              //      Project oldIdProjectOfOrderProjectCollectionNewOrderProject = orderProjectCollectionNewOrderProject.getIdProject();
+               //     orderProjectCollectionNewOrderProject.setIdProject(project);
+                //    orderProjectCollectionNewOrderProject = em.merge(orderProjectCollectionNewOrderProject);
+                 //   if (oldIdProjectOfOrderProjectCollectionNewOrderProject != null && !oldIdProjectOfOrderProjectCollectionNewOrderProject.equals(project)) {
+                  //      oldIdProjectOfOrderProjectCollectionNewOrderProject.getOrderProjectCollection().remove(orderProjectCollectionNewOrderProject);
+                   //     oldIdProjectOfOrderProjectCollectionNewOrderProject = em.merge(oldIdProjectOfOrderProjectCollectionNewOrderProject);
+                  //  }
+              //  }
+          //  }
             utx.commit();
         } catch (Exception ex) {
             try {

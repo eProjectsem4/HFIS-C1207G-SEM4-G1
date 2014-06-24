@@ -16,7 +16,7 @@
         <h1>Orders</h1>
         <table>
             <s:iterator value="listOrder">
-                <tr><td><s:property value="idAccount.fullname"></s:property></td><td><a href="agreeOrderAction?idAccount=<s:property value="idAccount.id"></s:property>">Agree</a></td></tr>
+                <tr><td><a href="Profile?id=<s:property value="idAccount.id"></s:property>"><s:property value="idAccount.fullname"></s:property></a></td><td><a href="agreeOrderAction?idAccount=<s:property value="idAccount.id"></s:property>">Agree</a></td></tr>
             </s:iterator>
         </table>
     </body>
