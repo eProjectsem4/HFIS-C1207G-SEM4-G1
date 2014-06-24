@@ -20,6 +20,15 @@
     <body>
         <h1>Hello <% if(accLog != null){out.print("<a href='Profile?id="+accLog.getId()+"'>"+accLog.getFullname() +"</a>");} %></h1>
         <a href="allProjectAction"><h1>All Project</h1></a>
-        <a href="createproject.jsp"><h1>Create New Project</h1></a>
+        <% 
+            if(accLog.getRole().equals("Customer")){
+                out.print("<a href='myProjectAction'><h1>My Project</h1></a>");
+                out.print("<a href='createproject.jsp'><h1>Create New Project</h1></a>");
+            }
+            if(accLog.getRole().equals("Worker")){
+                out.print("<a href='myOrderAction'><h1>My Order</h1></a>");
+            }
+        %>
+        <a href='forumAction'><h1>Forum</h1></a>
     </body>
 </html>

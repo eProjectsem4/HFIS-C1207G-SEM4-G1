@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Khanh/Documents/GitHub/HFIS-C1207G-SEM4-G1/eProjectSem4/WorkToWorker/web/details.jsp</file>
+            <file>file:/C:/Users/Khanh/Documents/GitHub/HFIS-C1207G-SEM4-G1/eProjectSem4/WorkToWorker/src/java/wtw/biz/TopicManager.java</file>
             <file>file:/C:/Users/Khanh/Documents/GitHub/HFIS-C1207G-SEM4-G1/eProjectSem4/WorkToWorker/src/java/struts.xml</file>
-            <file>file:/C:/Users/Khanh/Documents/GitHub/HFIS-C1207G-SEM4-G1/eProjectSem4/WorkToWorker/src/java/wtw/ui/AgreeOrderAction.java</file>
             <file>file:/C:/Users/Khanh/Documents/GitHub/HFIS-C1207G-SEM4-G1/eProjectSem4/WorkToWorker/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/Khanh/Documents/GitHub/HFIS-C1207G-SEM4-G1/eProjectSem4/WorkToWorker/web/showorder.jsp</file>
+            <file>file:/C:/Users/Khanh/Documents/GitHub/HFIS-C1207G-SEM4-G1/eProjectSem4/WorkToWorker/src/java/wtw/biz/CommentManager.java</file>
+            <file>file:/C:/Users/Khanh/Documents/GitHub/HFIS-C1207G-SEM4-G1/eProjectSem4/WorkToWorker/web/home.jsp</file>
         </group>
     </open-files>
 </project-private>

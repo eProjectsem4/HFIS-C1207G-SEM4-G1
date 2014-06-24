@@ -18,6 +18,7 @@ import javax.persistence.PersistenceUnit;
 import javax.transaction.UserTransaction;
 import wtw.da.ProjectJpaController;
 import wtw.da.exceptions.RollbackFailureException;
+import wtw.entities.Account;
 import wtw.entities.Project;
 
 /**
@@ -55,6 +56,10 @@ public class ProjectManager {
     
     public List<Project> getAll(){
         return getController().getAll();
+    }
+    
+    public List<Project> getByIdCustomer(Account customer){
+        return getController().getByIdCustomer(customer);
     }
     
     public Project getById(int id){

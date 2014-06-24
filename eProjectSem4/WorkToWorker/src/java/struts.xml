@@ -63,5 +63,17 @@
          <action name="rateAction" class="wtw.ui.RateAction">
             <result name="success">profile.jsp</result>
         </action>
+        
+          <action name="feedbackAction" class="wtw.ui.FeedBackAction">
+            <result name="success">profile.jsp</result>
+        </action>
+        
+        <action name="myProjectAction" class="wtw.ui.MyProjectAction">
+            <result name="success">allproject.jsp</result>
+        </action>
+        
+        <action name="myOrderAction" class="wtw.ui.MyOrderAction">
+            <result name="success">allproject.jsp</result>
+        </action>
     </package>
 </struts>

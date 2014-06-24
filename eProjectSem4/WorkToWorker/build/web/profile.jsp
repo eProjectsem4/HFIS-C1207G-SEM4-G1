@@ -59,7 +59,7 @@
         </s:iterator>
             <%
                 if(!accLog.getRole().equals(accPro.getRole())){
-                    out.print("<form action='feedbackAction?id="+accPro.getId()+"'><input name='content'><input type='submit' value='Send Feedback'></form>");
+                    out.print("<form action='feedbackAction' method='post'><input name='content'><input name='id' value='"+accPro.getId()+"' style='display: none'><input type='submit' value='Send Feedback'></form>");
                 }
             %>
              <s:iterator value="messFeed">

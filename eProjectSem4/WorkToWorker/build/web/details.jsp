@@ -21,10 +21,10 @@
     <body>
         <h2>Name : <s:property value="project.name"></s:property></h2>
         <h2>Category : <s:property value="project.category"></s:property></h2>
-        <h2>Customer : <s:property value="project.idCustomer.fullname"></s:property></h2>
+        <h2>Customer : <a href="Profile?id=<s:property value="project.idCustomer.id"></s:property>"><s:property value="project.idCustomer.fullname"></s:property></a></h2>
         <%
             if(project.getIdWorker() != null){
-                out.print("<h2>Worker : "+project.getIdWorker().getFullname()+"</h2>");
+                out.print("<h2>Worker : <a href='Profile?id="+project.getIdWorker().getId()+"'>"+project.getIdWorker().getFullname()+"</a></h2>");
             }else{
                 out.print("<h2>Worker : </h2>");
             }

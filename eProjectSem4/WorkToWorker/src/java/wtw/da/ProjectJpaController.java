@@ -54,6 +54,13 @@ public class ProjectJpaController implements Serializable {
         query.setParameter("id", id);
         return query.getResultList().get(0);
     }
+    
+     public List<Project> getByIdCustomer(Account customer){
+        String queryString = "SELECT p FROM Project p WHERE p.idCustomer = :idCustomer";
+        TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);
+        query.setParameter("idCustomer", customer);
+        return query.getResultList();
+    }
 
     public void create(Project project) throws PreexistingEntityException, RollbackFailureException, Exception {
         if (project.getOrderProjectCollection() == null) {

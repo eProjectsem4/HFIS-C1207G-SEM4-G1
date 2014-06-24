@@ -56,7 +56,7 @@ public class OrderProjectJpaController implements Serializable {
     }    
     
         public List<OrderProject> getByIdAcc(Account idAcc){
-        String queryString = "SELECT o FROM OrderProject o WHERE o.idProject = :idProject And o.idAccount = :idAccount";
+        String queryString = "SELECT o FROM OrderProject o WHERE o.idAccount = :idAccount";
         TypedQuery<OrderProject> query = getEntityManager().createQuery(queryString, OrderProject.class);
         query.setParameter("idAccount", idAcc);
         return query.getResultList();
