@@ -75,5 +75,21 @@
         <action name="myOrderAction" class="wtw.ui.MyOrderAction">
             <result name="success">allproject.jsp</result>
         </action>
+        
+        <action name="forumAction" class="wtw.ui.ForumAction">
+            <result name="success">forum.jsp</result>
+        </action>
+        
+        <action name="createTopicAction" class="wtw.ui.CreateTopicAction">
+            <result name="success">createtopic.jsp</result>
+        </action>
+        
+        <action name="showTopicAction" class="wtw.ui.ShowTopicAction">
+            <result name="success">showTopic.jsp</result>
+        </action>
+        
+        <action name="commentAction" class="wtw.ui.CommentAction">
+            <result name="success">showTopic.jsp</result>
+        </action>
     </package>
 </struts>

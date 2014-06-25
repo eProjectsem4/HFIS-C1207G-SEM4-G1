@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
@@ -37,6 +38,13 @@ public class CommentJpaController implements Serializable {
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
+    }
+    
+    public List<Comment> getByIdTopic(Topic tp){
+        String queryString = "SELECT c FROM Comment c WHERE c.idTopic = :idTopic";
+        TypedQuery<Comment> query = getEntityManager().createQuery(queryString, Comment.class);
+        query.setParameter("idTopic", tp);
+        return query.getResultList();
     }
 
     public void create(Comment comment) throws PreexistingEntityException, RollbackFailureException, Exception {

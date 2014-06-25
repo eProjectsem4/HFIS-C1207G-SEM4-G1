@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import javax.transaction.UserTransaction;
 import wtw.da.exceptions.NonexistentEntityException;
 import wtw.da.exceptions.PreexistingEntityException;
@@ -39,6 +40,19 @@ public class TopicJpaController implements Serializable {
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
+    }
+    
+    public List<Topic> getAll(){
+        String queryString = "SELECT t FROM Topic t";
+        TypedQuery<Topic> query = getEntityManager().createQuery(queryString, Topic.class);
+        return query.getResultList();
+    }
+    
+     public List<Topic> getById(int id){
+        String queryString = "SELECT t FROM Topic t WHERE t.id = :id";
+        TypedQuery<Topic> query = getEntityManager().createQuery(queryString, Topic.class);
+        query.setParameter("id", id);
+        return query.getResultList();
     }
 
     public void create(Topic topic) throws PreexistingEntityException, RollbackFailureException, Exception {
