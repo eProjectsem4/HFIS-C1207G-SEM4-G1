@@ -42,21 +42,21 @@ public class Validator {
     }
     
     public static boolean checkLengthFullName(String fullName){
-        if(fullName.length() <= 0 || fullName.length() > 50){
+        if(fullName.length() <= 5 || fullName.length() > 50){
             return false;
         }
         return true;
     }
     
     public static boolean checkLengthPassword(String password){
-        if(password.length() <= 0 || password.length() > 20){
+        if(password.length() <= 5 || password.length() > 20){
             return false;
         }
         return true;
     }
     
     public static boolean checkRepassword(String repassword,String password){
-        if(repassword.equals(password)){
+        if(repassword == null || repassword.equals(password)){
             return true;
         }
         return false;

@@ -41,10 +41,10 @@ public class RegisterAction extends ActionSupport{
             messRegister.add("You must insert all field");
         }
         if(!wtw.validate.Validator.checkLengthFullName(fullName)){
-            messRegister.add("Full Name is invalid (0-50 characters).");
+            messRegister.add("Full Name is invalid (6-50 characters).");
         }
         if(!wtw.validate.Validator.checkLengthPassword(password)){
-            messRegister.add("Password is invalid (0-20 characters).");
+            messRegister.add("Password is invalid (6-20 characters).");
         }
         if(!wtw.validate.Validator.checkRepassword(repassword, password)){
             messRegister.add("Re-Password not match password.");
