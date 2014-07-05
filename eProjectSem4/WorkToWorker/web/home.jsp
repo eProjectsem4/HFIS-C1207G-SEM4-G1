@@ -18,7 +18,7 @@
         <title>Work To Worker</title>
     </head>
     <body>
-        <h1>Hello <% if(accLog != null){out.print("<a href='Profile?id="+accLog.getId()+"'>"+accLog.getFullname() +"</a>");} %></h1>
+        <h1>Hello <% if(accLog != null){out.print("<a href='Profile?id="+accLog.getId()+"'>"+accLog.getFullname() +"</a>"); out.print("<form action='logoutAction'><input type='submit' value='Logout'></form>");} %></h1>
         <a href="allProjectAction"><h1>All Project</h1></a>
         <% 
             if(accLog.getRole().equals("Customer")){
