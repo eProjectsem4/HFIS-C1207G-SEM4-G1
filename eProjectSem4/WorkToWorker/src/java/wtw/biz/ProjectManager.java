@@ -44,6 +44,10 @@ public class ProjectManager {
         return daController;
     }
     
+      public List<Project> searchProject(String keyword){
+        return getController().searchProject(keyword);
+    }
+    
 
     
     public void createProject(Project p){

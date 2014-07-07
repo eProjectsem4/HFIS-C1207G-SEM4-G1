@@ -48,6 +48,20 @@ public class ProjectJpaController implements Serializable {
         return query.getResultList();
     }
     
+     public List<Project> searchProject(String keywork){
+        String queryString = "SELECT p FROM Project p where p.name like :name or p.category like :category or p.price = :price or p.status = :status";
+        TypedQuery<Project> query = getEntityManager().createQuery(queryString,Project.class);
+        query.setParameter("name", "%" + keywork + "%");
+        query.setParameter("category", "%"+keywork+"%");
+        query.setParameter("status", keywork);
+        try{
+            query.setParameter("price", Integer.parseInt(keywork));
+        }catch(Exception e){
+            query.setParameter("price", null);
+        }
+        return query.getResultList();
+    }
+    
     public Project getById(int id){
         String queryString = "SELECT p FROM Project p WHERE p.id = :id";
         TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);

@@ -60,11 +60,11 @@
             <result name="success">editprofile.jsp</result>
         </action>
         
-         <action name="rateAction" class="wtw.ui.RateAction">
+        <action name="rateAction" class="wtw.ui.RateAction">
             <result name="success">profile.jsp</result>
         </action>
         
-          <action name="feedbackAction" class="wtw.ui.FeedBackAction">
+        <action name="feedbackAction" class="wtw.ui.FeedBackAction">
             <result name="success">profile.jsp</result>
         </action>
         
@@ -94,6 +94,10 @@
         
         <action name="logoutAction" class="wtw.ui.LogoutAction">
             <result name="success">index.jsp</result>
+        </action>
+        
+        <action name="searchProjectAction" class="wtw.ui.SearchProjectAction">
+            <result name="success">allproject.jsp</result>
         </action>
     </package>    
 </struts>

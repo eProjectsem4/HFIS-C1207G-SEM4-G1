@@ -105,8 +105,8 @@
                                 </div>
                                 <!-- /widget-header -->
                                 <div class="widget-content">
-                                    <form class="navbar-search pull-right">
-                                        <input type="text" class="search-query" placeholder="Search Project" name="keyword" style="font-weight: bold">
+                                    <form class="navbar-search pull-right" action="searchProjectAction">
+                                        <input type="text" placeholder="Search Project" name="keyword" style="font-weight: bold">
                                     </form>
                                     
                                     <table id="project-table" class="table table-striped table-bordered">

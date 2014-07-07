@@ -4,13 +4,19 @@
     Author     : Khanh
 --%>
 
+<%@page import="wtw.entities.Account"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
+<% Account accLog = (Account) request.getSession().getAttribute("accLog");
+    if (accLog == null || !accLog.getRole().equals("Customer")) {
+        response.sendRedirect("index.jsp");
+    }
+%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <meta charset="utf-8">
-        <title>Dashboard - Bootstrap Admin Template</title>
+        <title>Work To Worker</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -31,12 +37,12 @@
                 <div class="container">
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                         <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                    </a><a class="brand" href="index.html">Work To Worker Management</a>
+                    </a><a class="brand" href="home.jsp">Work To Worker </a>
                     <div class="nav-collapse">
                         <ul class="nav pull-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-cog"></i> Account <b class="caret"></b>
+                                    <i class="icon-cog"></i>Account<b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="javascript:;">Settings</a></li>
@@ -45,11 +51,13 @@
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-user"></i> EGrappler.com <b class="caret"></b>
+                                    <i class="icon-user"></i> <% if (accLog != null) {
+                                            out.print(accLog.getFullname());
+                                        }%> <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="javascript:;">Profile</a></li>
-                                    <li><a href="javascript:;">Logout</a></li>
+                                    <li><a href="logoutAction">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -68,19 +76,17 @@
             <div class="subnavbar-inner">
                 <div class="container">
                     <ul class="mainnav">
-                        <li class="active"><a href="index.html"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
+                        <li class="active"><a href="home.jsp"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
                         <li class="dropdown">
                             <a href="index.html" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i><span>My Project</span> </a>
                             <ul class="dropdown-menu">
-                                <li><a href="icons.html">Post Project</a></li>
-                                <li><a href="faq.html">List Project</a></li>
-                                <li><a href="pricing.html">In Progress</a></li>
-                                <li><a href="login.html">Complete Projects</a></li>
+                                <li><a href="createproject.jsp">Post Project</a></li>
+                                <li><a href="allProjectAction">List Project</a></li>
                             </ul>
                         </li>
-                        <li><a href="guidely.html"><i class="icon-facetime-video"></i><span>Find Worker</span> </a></li>
-                        <li><a href="reports.html"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
-                        <li><a href="shortcodes.html"><i class="icon-comment"></i><span>Help</span> </a> </li>
+                        <li><a href="#"><i class="icon-facetime-video"></i><span>Find Worker</span> </a></li>
+                        <li><a href="#"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
+                        <li><a href="#"><i class="icon-comment"></i><span>Help</span> </a> </li>
                     </ul>
                 </div>
                 <!-- /container -->
@@ -100,17 +106,8 @@
                                 </div>
                                 <!-- /widget-header -->
                                 <div class="widget-content">
-                                    <form class="navbar-search pull-right">
-                                        <input type="text" class="search-query" placeholder="Search Project Name">
-                                    </form>
                                     <table class="table table-striped table-bordered">
                                         <thead>
-                                            <tr>
-                                                <td>
-                                                    Looking to hire ? <button class="btn"> Post a Project</button>
-                                                </td>
-
-                                            </tr>
 
                                             <tr>
                                                 <th>Project Name </th>
@@ -351,4 +348,4 @@
             });
         </script><!-- /Calendar -->
     </body>
-</html>
+</<html>
