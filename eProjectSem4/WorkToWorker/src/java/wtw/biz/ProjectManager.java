@@ -45,7 +45,7 @@ public class ProjectManager {
     }
     
       public List<Project> searchProject(String keyword){
-        return getController().searchProject(keyword);
+        return getController().findBykeyword(keyword);
     }
     
 
