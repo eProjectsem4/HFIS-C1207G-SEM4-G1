@@ -6,11 +6,14 @@
 package wtw.ui;
 
 import com.opensymphony.xwork2.ActionSupport;
+import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -24,24 +27,21 @@ public class GetChartAction extends ActionSupport {
 
     @Override
     public String execute() throws Exception {
-        ValueAxis xAxis = new NumberAxis("Input Increase");//Ngang
-        ValueAxis yAxis = new NumberAxis("Production");//Dọc
-        XYSeries xySeries = new XYSeries(new Integer(1));
-        xySeries.add(0, 200);// dữ liệu truyền vào
-        xySeries.add(1, 300);
-        xySeries.add(2, 500);
-        xySeries.add(3, 700);
-        xySeries.add(4, 700);
-        xySeries.add(5, 900);
-        XYSeriesCollection xyDataset
-                = new XYSeriesCollection(xySeries);
-        // create XYPlot
-        XYPlot xyPlot = new XYPlot(xyDataset, xAxis, yAxis, new StandardXYItemRenderer(StandardXYItemRenderer.SHAPES_AND_LINES));
-        chart = new JFreeChart(xyPlot);
+        DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+        dataSet.setValue(791, "Population", "1750 AD");
+        dataSet.setValue(978, "Population", "1800 AD");
+        dataSet.setValue(1262, "Population", "1850 AD");
+        dataSet.setValue(1650, "Population", "1900 AD");
+        dataSet.setValue(2519, "Population", "1950 AD");
+        dataSet.setValue(6070, "Population", "2000 AD");
+
+        chart = ChartFactory.createBarChart3D(
+                "World Population growth", "Year", "Population in millions",
+                dataSet, PlotOrientation.VERTICAL, false, true, false);
         return SUCCESS;
     }
 
     public JFreeChart getChart() {
         return chart;
-    } 
+    }
 }

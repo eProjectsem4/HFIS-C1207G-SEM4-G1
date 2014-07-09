@@ -99,9 +99,11 @@
         <action name="searchProjectAction" class="wtw.ui.SearchProjectAction">
             <result name="success">allproject.jsp</result>
         </action>
+        
         <action name="fetchName" class="wtw.ui.ExprotXlsAction" method="fetchName">
             <result name="success">exporttoexcel.jsp</result>
         </action>
+        
         <action name="exportEmployeeDetails" class="wtw.ui.ExprotXlsAction" method="export">
             <result name="success" type="stream">
                 <param name="contentDisposition">attachment;filename="${reportFile}"</param>
@@ -110,6 +112,7 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
+        
         <action name="pdfAction" class="wtw.ui.GeneratingPdfAction" 
                 method="generatingPdf">
             <result name="test-stream" type="stream">
@@ -118,12 +121,29 @@
                 <param name="contentDisposition">attachment;filename="test.pdf"</param>
             </result>
         </action>
+        
+        <action name="barchart">
+            <result name="success">charts.jsp</result>
+        </action>
+        
     </package>
     <package name="chart" extends="jfreechart-default">
         <action name="chart" class="wtw.ui.GetChartAction">
             <result name="success" type="chart">
-                <param name="width">400</param>
-                <param name="height">300</param>
+                <param name="width">533</param>
+                <param name="height">250</param>
+            </result>
+        </action>
+       <action name="linechart" class="wtw.ui.LineChartAction">
+            <result name="success" type="chart">
+                <param name="width">533</param>
+                <param name="height">250</param>
+            </result>
+        </action>
+         <action name="piechart" class="wtw.ui.PieChartAction">
+            <result name="success" type="chart">
+                <param name="width">533</param>
+                <param name="height">250</param>
             </result>
         </action>
     </package>    
