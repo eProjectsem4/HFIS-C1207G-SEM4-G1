@@ -145,7 +145,7 @@
                                         <p class="title_stats">Skills Required</p>
                                         <h6 class="bigstats"><section style="color: blue"><s:property value="project.nameSkills"/></section></h6>
 
-
+                                        <a href="<s:property value="project.attFile"></s:property>">File Att</a>
                                         <s:if test="%{!messError.isEmpty()}">
                                             <div class="control-group">
                                                 <div class="controls">

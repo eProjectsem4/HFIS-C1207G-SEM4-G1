@@ -441,7 +441,7 @@
 
                                                                 <div class="fileUpload btn btn-primary btn-large">
                                                                     <span>Upload</span>
-                                                                    <input id="fileUploaded" type="file" name="fileUploaded" class="upload" />
+                                                                    <input id="fileUploaded" type="file" name="fileUpload" class="upload" />
                                                                 </div>
                                                             </div>	
                                                         </div>  

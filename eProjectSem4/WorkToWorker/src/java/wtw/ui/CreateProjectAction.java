@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package wtw.ui;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,9 @@ import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.io.FileUtils;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import wtw.biz.ProjectManager;
 import wtw.entities.Account;
 import wtw.entities.Project;
@@ -24,17 +28,20 @@ import wtw.entities.Project;
  *
  * @author Khanh
  */
-public class CreateProjectAction extends ActionSupport{
+public class CreateProjectAction extends ActionSupport implements ServletRequestAware {
+
     ProjectManager projectManager = lookupProjectManagerBean();
-    
-    
-    
+
     private String name;
     private String category;
     private String skills;
     private String description;
     private String price;
-    
+    private File fileUpload;
+    private String fileUploadFileName;
+
+    private HttpServletRequest servletRequest;
+
     private List<String> messCreate;
 
     public String getName() {
@@ -85,37 +92,59 @@ public class CreateProjectAction extends ActionSupport{
         this.messCreate = messCreate;
     }
 
-    
-    
+    public File getFileUpload() {
+        return fileUpload;
+    }
+
+    public void setFileUpload(File fileUpload) {
+        this.fileUpload = fileUpload;
+    }
+
+    public HttpServletRequest getServletRequest() {
+        return servletRequest;
+    }
+
+    public void setServletRequest(HttpServletRequest servletRequest) {
+        this.servletRequest = servletRequest;
+    }
+
+    public String getFileUploadFileName() {
+        return fileUploadFileName;
+    }
+
+    public void setFileUploadFileName(String fileUploadFileName) {
+        this.fileUploadFileName = fileUploadFileName;
+    }
 
     @Override
     public String execute() throws Exception {
+
         Account accLog = (Account) ActionContext.getContext().getSession().get("accLog");
         messCreate = new ArrayList<String>();
-        if(!wtw.validate.Validator.checkStringEmpty(new String[]{name,category,skills,description,price})){
+        if (!wtw.validate.Validator.checkStringEmpty(new String[]{name, category, skills, description, price})) {
             messCreate.add("You must insert all field");
         }
-        
-        if(!wtw.validate.Validator.checkLengthName(name)){
+
+        if (!wtw.validate.Validator.checkLengthName(name)) {
             messCreate.add("Name is invalid (0-50 characters).");
         }
-        
-        if(!wtw.validate.Validator.checkLengthNameSkills(skills)){
+
+        if (!wtw.validate.Validator.checkLengthNameSkills(skills)) {
             messCreate.add("Skills is invalid (0-100 characters).");
         }
-        
-        if(!wtw.validate.Validator.checkLengthDesctiption(description)){
+
+        if (!wtw.validate.Validator.checkLengthDesctiption(description)) {
             messCreate.add("Description is invalid (0-500 characters).");
         }
-        
-        if(!accLog.getRole().equals("Customer")){
+
+        if (!accLog.getRole().equals("Customer")) {
             messCreate.add("Not Permission");
         }
-        
-        if(messCreate.size() > 0){
+
+        if (messCreate.size() > 0) {
             return "error";
         }
-       
+
         Project p = new Project();
         p.setName(name);
         p.setCategory(category);
@@ -125,14 +154,20 @@ public class CreateProjectAction extends ActionSupport{
         p.setPrice(Integer.parseInt(price));
         p.setStartDate(new Date());
         p.setStatus("Started");
-        
+
+        if (fileUpload != null) {
+            String filePath = servletRequest.getSession().getServletContext().getRealPath("/").concat("fileProject");
+            String fileName = name + new SimpleDateFormat("yyyy-MM-dd HH-mm-ss-S").format(new Date()) + fileUploadFileName;
+            File fileToCreate = new File(filePath, fileName);
+            FileUtils.copyFile(this.fileUpload, fileToCreate);//copying image in the new file 
+            p.setAttFile("fileProject/" + fileName);
+        }
+
         projectManager.createProject(p);
         messCreate = new ArrayList<String>();
         messCreate.add("Create success !");
         return "success";
     }
-    
-    
 
     private ProjectManager lookupProjectManagerBean() {
         try {
@@ -144,7 +179,4 @@ public class CreateProjectAction extends ActionSupport{
         }
     }
 
-    
-    
-    
 }
