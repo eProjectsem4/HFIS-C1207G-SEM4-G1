@@ -81,7 +81,7 @@
                             </ul>
                         </li>
                         <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
-                        <li><a href="#"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
+                        <li><a href="barchart"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
                         <li><a href="#"><i class="icon-comment"></i><span>Help</span> </a> </li>
                     </ul>
                 </div>
@@ -110,7 +110,7 @@
                                                 <div class="info">
                                                     <a class="name" href="Profile?id=<s:property value="tp.idAccount.id"/>"><s:property value="tp.idAccount.fullname"/> <span class="time"><s:property value="tp.postDate"/></span></a>
                                                 </div>
-                                                <div class="text"><s:property value="tp.content"/></div>
+                                                    <div class="text"><s:property value="tp.content" escapeHtml="false"/></div>
                                             </div>
                                         </li>
                                         <s:iterator value="listComment">
@@ -121,7 +121,7 @@
                                                     <div class="info">
                                                         <a class="name" href="Profile?id=<s:property value="tp.idAccount.id"/>"><s:property value="tp.idAccount.fullname"/> <span class="time"><s:property value="tp.postDate"/></span>
                                                     </div>
-                                                    <div class="text"><s:property value="tp.content"/></div>
+                                                    <div class="text"><s:property value="tp.content" escapeHtml="false"/></div>
                                                 </div>
                                             </li>
                                         </s:iterator>
@@ -133,7 +133,7 @@
                                 </s:iterator>
 
                                 <form action="commentAction" method="post">
-                                    <input name="idTopic" value="<s:property value="tp.id"/> style="display: none">
+                                    <input name="idTopic" value="<s:property value="tp.id"/>" style="display: none">
                                            <textarea name="content"  style="width:100%"></textarea>
                                     <input type="submit" value="Send">
                                 </form>

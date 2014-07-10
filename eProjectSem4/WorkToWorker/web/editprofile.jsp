@@ -160,7 +160,7 @@
                             </ul>
                         </li>
                         <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
-                        <li><a href="#"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
+                        <li><a href="barchart"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
                         <li><a href="#"><i class="icon-comment"></i><span>Help</span> </a> </li>
                     </ul>
                 </div>

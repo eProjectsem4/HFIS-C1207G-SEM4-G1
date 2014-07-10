@@ -35,23 +35,31 @@
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
-                            class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                    </a><a class="brand" href="index.html">Bootstrap Admin Template </a>
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                    </a><a class="brand" href="home.jsp">Work To Worker </a>
                     <div class="nav-collapse">
                         <ul class="nav pull-right">
-                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                        class="icon-cog"></i> Account <b class="caret"></b></a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="icon-cog"></i>Account<b class="caret"></b>
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="javascript:;">Settings</a></li>
                                     <li><a href="javascript:;">Help</a></li>
                                 </ul>
                             </li>
-                            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                        class="icon-user"></i> EGrappler.com <b class="caret"></b></a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="icon-user"></i> 
+                                    <s:if test="%{#session.accLog != null}">
+                                        <s:property value="#session.accLog.getFullname()"/>
+                                    </s:if>
+                                    <b class="caret"></b>
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="javascript:;">Profile</a></li>
-                                    <li><a href="javascript:;">Logout</a></li>
+                                    <li><a href="logoutAction">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -70,27 +78,17 @@
             <div class="subnavbar-inner">
                 <div class="container">
                     <ul class="mainnav">
-                        <li><a href="index.html"><i class="icon-dashboard"></i><span>Dashboard</span> </a>
-                        </li>
-                        <li><a href="#"><i class="icon-list-alt"></i><span>Reports</span> </a>
-                        </li>
-                        <li><a href="guidely.html"><i class="icon-facetime-video"></i><span>App Tour</span>
-                            </a></li>
-                        <li class="active"><a href="barchart"><i class="icon-bar-chart"></i><span>Charts</span> </a>
-                        </li>
-                        <li><a href="shortcodes.html"><i class="icon-code"></i><span>Shortcodes</span> </a>
-                        </li>
-                        <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="icon-long-arrow-down"></i><span>Drops</span> <b class="caret"></b></a>
+                        <li class="active"><a href="home.jsp"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
+                        <li class="dropdown">
+                            <a href="index.html" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i><span>My Project</span> </a>
                             <ul class="dropdown-menu">
-                                <li><a href="icons.html">Icons</a></li>
-                                <li><a href="faq.html">FAQ</a></li>
-                                <li><a href="pricing.html">Pricing Plans</a></li>
-                                <li><a href="login.html">Login</a></li>
-                                <li><a href="signup.html">Signup</a></li>
-                                <li><a href="error.html">404</a></li>
+                                <li><a href="createproject.jsp">Post Project</a></li>
+                                <li><a href="allProjectAction">List Project</a></li>
                             </ul>
                         </li>
+                        <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
+                        <li><a href="barchart"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
+                        <li><a href="#"><i class="icon-comment"></i><span>Help</span> </a> </li>
                     </ul>
                 </div>
                 <!-- /container -->
@@ -116,23 +114,6 @@
                                     <img src="<s:property value="url"/>"/>
 
                                     <!-- /bar-chart -->
-                                </div>
-                                <!-- /widget-content -->
-                            </div>
-                            <!-- /widget -->
-                        </div>
-                        <div class="span6">
-                            <div class="widget">
-                                <div class="widget-header">
-                                    <i class="icon-bar-chart"></i>
-                                    <h3>
-                                        Line Chart</h3>
-                                </div>
-                                <!-- /widget-header -->
-                                <div class="widget-content">
-                                    <s:url action="linechart" id="url"/>
-                                    <img src="<s:property value="url"/>"/>
-                                    <!-- /line-chart -->
                                 </div>
                                 <!-- /widget-content -->
                             </div>

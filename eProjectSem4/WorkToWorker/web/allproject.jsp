@@ -83,7 +83,7 @@
                             </ul>
                         </li>
                         <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
-                        <li><a href="#"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
+                        <li><a href="barchart"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
                         <li><a href="#"><i class="icon-comment"></i><span>Help</span> </a> </li>
                     </ul>
                 </div>
@@ -110,13 +110,13 @@
                                     
                                     
 
-                                    <display:table id="projectTable" name="listProject" pagesize="10" sort="descending" requestURI="" class="table table-striped table-bordered" >
-                                            <td><display:column property="name" title="Project Name" sortable="true" defaultorder="descending"/></td>
-                                            <td><display:column property="category" title="Category" sortable="true" defaultorder="descending"/></td>
-                                            <td><display:column property="price" title="Price" sortable="true" defaultorder="descending"/></td> 
-                                            <td><display:column property="startDate" title="Start Date" format="{0,date,dd-MM-yyyy}" sortable="true" defaultorder="descending"/></td> q
-                                            <td><display:column property="endDate" title="End Date" format="{0,date,dd-MM-yyyy}" sortable="true" defaultorder="descending"/></td> 
-                                            <td><display:column property="status" title="Status" sortable="true" defaultorder="descending"/></td>
+                                    <display:table id="projectTable" name="listProject" pagesize="10"  requestURI="" defaultsort="4" defaultorder="descending" class="table table-striped table-bordered" >
+                                        <td><display:column property="name" title="Project Name" sortable="true" sortName="name" /></td>
+                                            <td><display:column property="category" title="Category" sortable="true" /></td>
+                                            <td><display:column property="price" title="Price" sortable="true" /></td> 
+                                            <td><display:column property="startDate" title="Start Date" format="{0,date,dd-MM-yyyy}" sortable="true" /></td> q
+                                            <td><display:column property="endDate" title="End Date" format="{0,date,dd-MM-yyyy}" sortable="true" /></td> 
+                                            <td><display:column property="status" title="Status" sortable="true" /></td>
                                             <display:column class="td-actions" ><a href="detailsAction?id=${projectTable.id}"  class="btn btn-success"><i class="btn-icon-only"> View Detail </i></a></display:column>
                                            
 

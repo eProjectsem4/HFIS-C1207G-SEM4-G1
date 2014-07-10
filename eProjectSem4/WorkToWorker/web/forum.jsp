@@ -9,25 +9,6 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Forum</title>
-    </head>
-    <body>
-        <h1>Forum</h1>
-        <a href="createtopic.jsp">Create</a>
-        <br>
-        <br>
-        <h1>Topics</h1>
-        <s:iterator value="listTopic">
-            <a href="<s:property value="id"></s:property>"><s:property value="title"></s:property></a> : 
-            <a href="Profile?id=<s:property value=""></s:property>"><s:property value="idAccount.fullname"></s:property></a> :   
-            <s:property value="postDate"></s:property>
-        </s:iterator>
-    </body>
-</html>
-<!DOCTYPE html>
-<html>
 
     <head>
         <meta charset="utf-8">
@@ -109,7 +90,7 @@
                             </ul>
                         </li>
                         <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
-                        <li><a href="#"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
+                        <li><a href="barchart"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
                         <li><a href="#"><i class="icon-comment"></i><span>Help</span> </a> </li>
                     </ul>
                 </div>
@@ -156,10 +137,10 @@
 
                                 <div class="widget-content">
 
-                                    <display:table id="projectTable" name="listTopic" pagesize="10" requestURI="" class="table table-striped table-bordered">
+                                    <display:table id="projectTable" name="listTopic" pagesize="10" requestURI="" class="table table-striped ">
 
-                                        <td><display:column href="showTopicAction?id=${id}" property="title" title="Thread" sortable="true"/></td>
-                                        <td><display:column href="Profile?id=${idAccount.id}" property="${idAccount.fullname}" title="Name" sortable="true"/></td> 
+                                        <td><display:column href="showTopicAction?id=${projectTable.id}" property="title" title="Thread" sortable="true"/></td>
+                                        <td><display:column href="Profile?id=${projectTable.idAccount.id}" property="idAccount.fullname" title="Name" sortable="true"/></td> 
                                         <td><display:column property="postDate" title="Date" format="{0,date,dd-MM-yyyy}" sortable="true"/></td>
 
                                         <display:setProperty name="paging.banner.no_items_found" value='<span class="pagebanner">No {0} found.</span>' />

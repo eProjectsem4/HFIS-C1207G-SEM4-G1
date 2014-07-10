@@ -550,7 +550,9 @@ ul.messages_layout {
 ul.messages_layout li {
 	float: left;
 	list-style: none;
-	position: relative
+	position: relative;
+        width: 100%
+            
 }
 ul.messages_layout li.left {
 	padding-left: 75px
@@ -570,10 +572,12 @@ ul.messages_layout li.right .message_wrap .arrow {
 	width: 12px
 }
 ul.messages_layout li.by_myself .message_wrap {
-	border: 1px solid #b3cdf8
+	border: 1px solid #b3cdf8;
+        width: 90%
 }
 ul.messages_layout li.by_myself .message_wrap .info a.name {
-	color: #4a8cf7
+	color: #4a8cf7; 
+        width: 90%
 }
 ul.messages_layout li a.avatar {
 	position: absolute;
