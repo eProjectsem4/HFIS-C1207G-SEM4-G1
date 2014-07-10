@@ -60,9 +60,11 @@
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-user"></i> <% if (accLog != null) {
-                                            out.print(accLog.getFullname());
-                                        }%> <b class="caret"></b>
+                                    <i class="icon-user"></i> 
+                                    <s:if test="%{#session.accLog != null}">
+                                        <s:property value="#session.accLog.getFullname()"/>
+                                    </s:if>
+                                    <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="javascript:;">Profile</a></li>
@@ -93,7 +95,7 @@
                                 <li><a href="allProjectAction">List Project</a></li>
                             </ul>
                         </li>
-                        <li><a href="#"><i class="icon-facetime-video"></i><span>Find Worker</span> </a></li>
+                        <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
                         <li><a href="#"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
                         <li><a href="#"><i class="icon-comment"></i><span>Help</span> </a> </li>
                     </ul>
@@ -140,12 +142,21 @@
 
                                         </div>
                                         <h6 class="bigstats">&nbsp;</h6>
+                                        <p class="title_stats" style="color: #0088cc">Customer Name : <a href="Profile?id=<s:property value="accProject.id" />"><s:property value="accProject.fullname" /></a></p>
                                         <p class="title_stats">Project Description</p>
                                         <h6 class="bigstats"><s:property value="project.descriptions" escapeHtml="false"/></h6>
                                         <p class="title_stats">Skills Required</p>
                                         <h6 class="bigstats"><section style="color: blue"><s:property value="project.nameSkills"/></section></h6>
 
-                                        <a href="<s:property value="project.attFile"></s:property>">File Att</a>
+                                        <s:if test="%{project.attFile != null}">
+                                        <div class="control-group" >
+                                            <div class="controls" id="msg-errors">
+                                                <div class="alert alert-info">
+                                                    <a href="<s:property value="project.attFile"/>">File Att</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </s:if>
                                         <s:if test="%{!messError.isEmpty()}">
                                             <div class="control-group">
                                                 <div class="controls">

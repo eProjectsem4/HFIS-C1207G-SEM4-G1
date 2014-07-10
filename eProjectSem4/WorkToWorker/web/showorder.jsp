@@ -51,9 +51,11 @@
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-user"></i> <% if (accLog != null) {
-                                            out.print(accLog.getFullname());
-                                        }%> <b class="caret"></b>
+                                    <i class="icon-user"></i> 
+                                    <s:if test="%{#session.accLog != null}">
+                                        <s:property value="#session.accLog.getFullname()"/>
+                                    </s:if>
+                                    <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="javascript:;">Profile</a></li>
@@ -84,7 +86,7 @@
                                 <li><a href="allProjectAction">List Project</a></li>
                             </ul>
                         </li>
-                        <li><a href="#"><i class="icon-facetime-video"></i><span>Find Worker</span> </a></li>
+                        <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
                         <li><a href="#"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
                         <li><a href="#"><i class="icon-comment"></i><span>Help</span> </a> </li>
                     </ul>

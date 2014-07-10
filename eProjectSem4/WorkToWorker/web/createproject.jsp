@@ -90,8 +90,13 @@
 //
 //                });
 
-                $('#fileUploaded').change(function() {
-                    $('#uploadFile').val($('#fileUploaded').val());
+                $('#fileUpload').change(function() {
+                    var filepath = $('#fileUpload').val();
+                    
+                        // update the file-path text using case-insensitive regex
+                        filepath = filepath.replace(/C:\\fakepath\\/i, '');
+                    
+                    $('#uploadFile').val(filepath);
 
                 });
 
@@ -102,7 +107,11 @@
                     return this.optional(element) || (element.files[0].size <= param)
                 });
 
-                $('#edit-profile').validate({
+                 var validator =  $('#edit-profile').submit(function() {
+			// update underlying textarea before submit validation
+			tinyMCE.triggerSave();
+		}).validate({
+                   ignore: "",
                     rules: {
                         name: {
                             required: true,
@@ -126,9 +135,9 @@
                             max: 10000,
 
                         },
-                        fileUploaded: {
+                        fileUpload: {
                             extension: "rar|zip",
-                            filesize: "1048576"
+                            filesize: "2097152"
                         }
 
                     },
@@ -153,13 +162,28 @@
                             min: "Your project must be at least $ 10",
                             max: "Your project is only the maximum $ 10,000",
                         },
-                        fileUploaded: {
+                        fileUpload: {
                             extension: "File must be RAR or ZIP",
-                            filesize: "File must less than 1MB"
+                            filesize: "File must less than 10MB"
                         }
                     }
                 });
 
+                validator.focusInvalid = function() {
+			// put focus on tinymce on submit validation
+			if( this.settings.focusInvalid ) {
+				try {
+					var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
+					if (toFocus.is("textarea")) {
+						tinyMCE.get(toFocus.attr("id")).focus();
+					} else {
+						toFocus.filter(":visible").focus();
+					}
+				} catch(e) {
+					// ignore IE throwing errors when focusing hidden elements
+				}
+			}
+		}
 
             });
         </script>
@@ -188,7 +212,10 @@
                 "Python",
                 "Ruby",
                 "Scala",
-                "Scheme"
+                "Scheme",
+                ".NET",
+                "HTML",
+                
             ];
 
             $(function() {
@@ -271,7 +298,7 @@
     </head>
 
     <body>
-        <div class="navbar navbar-fixed-top">
+       <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -290,9 +317,11 @@
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-user"></i> <% if (accLog != null) {
-                                            out.print(accLog.getFullname());
-                                        }%> <b class="caret"></b>
+                                    <i class="icon-user"></i> 
+                                    <s:if test="%{#session.accLog != null}">
+                                        <s:property value="#session.accLog.getFullname()"/>
+                                    </s:if>
+                                    <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="javascript:;">Profile</a></li>
@@ -323,7 +352,7 @@
                                 <li><a href="allProjectAction">List Project</a></li>
                             </ul>
                         </li>
-                        <li><a href="#"><i class="icon-facetime-video"></i><span>Find Worker</span> </a></li>
+                        <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
                         <li><a href="#"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
                         <li><a href="#"><i class="icon-comment"></i><span>Help</span> </a> </li>
                     </ul>
@@ -429,7 +458,7 @@
                                                         <div class="control-group">
                                                             <label class="control-label" for="projectdetails">Describe your project in detail</label>
                                                             <div class="controls" title="Please provide detail of project ">
-                                                                <textarea class="span10" id="description" name="description"  rel="tooltip" pattern=".{20,150}"></textarea>
+                                                                <textarea class="span10" id="description" name="description"  rel="tooltip"></textarea>
                                                             </div> <!-- /controls -->
                                                         </div>
                                                     <!--file upload-->
@@ -441,7 +470,7 @@
 
                                                                 <div class="fileUpload btn btn-primary btn-large">
                                                                     <span>Upload</span>
-                                                                    <input id="fileUploaded" type="file" name="fileUpload" class="upload" />
+                                                                    <input id="fileUpload" type="file" name="fileUpload" class="upload" />
                                                                 </div>
                                                             </div>	
                                                         </div>  

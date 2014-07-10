@@ -8,9 +8,6 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
-<%
-    Account accLog = (Account) request.getSession().getAttribute("accLog");
-%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -50,9 +47,11 @@
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-user"></i> <% if (accLog != null) {
-                                            out.print(accLog.getFullname());
-                                        }%> <b class="caret"></b>
+                                    <i class="icon-user"></i> 
+                                    <s:if test="%{#session.accLog != null}">
+                                        <s:property value="#session.accLog.getFullname()"/>
+                                    </s:if>
+                                    <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="javascript:;">Profile</a></li>
@@ -83,7 +82,7 @@
                                 <li><a href="allProjectAction">List Project</a></li>
                             </ul>
                         </li>
-                        <li><a href="#"><i class="icon-facetime-video"></i><span>Find Worker</span> </a></li>
+                        <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
                         <li><a href="#"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
                         <li><a href="#"><i class="icon-comment"></i><span>Help</span> </a> </li>
                     </ul>
@@ -109,19 +108,16 @@
                                         <input type="text" placeholder="Search Project" name="keyword" style="font-weight: bold">
                                     </form>
                                     
-                                    <table id="project-table" class="table table-striped table-bordered">
+                                    
 
-                                        <tbody>
-
-                                            <display:table id="projectTable" name="listProject" pagesize="10" requestURI="" class="table table-striped table-bordered">
-                                            <td><display:column property="name" title="Project Name" sortable="true"/></td>
-                                            <td><display:column property="category" title="Category" sortable="true"/></td>
-                                            <td><display:column property="price" title="Price" sortable="true"/></td> 
-                                            <td><display:column property="startDate" title="Start Date" format="{0,date,dd-MM-yyyy}" sortable="true"/></td> q
-                                            <td><display:column property="endDate" title="End Date" format="{0,date,dd-MM-yyyy}" sortable="true"/></td> 
-                                            <td><display:column property="status" title="Status" sortable="true"/></td>
-                                            <c:set var="id" value="${projectTable.id}"/>
-                                            <display:column class="td-actions" ><a href="detailsAction?id=${id}"  class="btn btn-success"><i class="btn-icon-only"> View Detail </i></a></display:column>
+                                    <display:table id="projectTable" name="listProject" pagesize="10" sort="descending" requestURI="" class="table table-striped table-bordered" >
+                                            <td><display:column property="name" title="Project Name" sortable="true" defaultorder="descending"/></td>
+                                            <td><display:column property="category" title="Category" sortable="true" defaultorder="descending"/></td>
+                                            <td><display:column property="price" title="Price" sortable="true" defaultorder="descending"/></td> 
+                                            <td><display:column property="startDate" title="Start Date" format="{0,date,dd-MM-yyyy}" sortable="true" defaultorder="descending"/></td> q
+                                            <td><display:column property="endDate" title="End Date" format="{0,date,dd-MM-yyyy}" sortable="true" defaultorder="descending"/></td> 
+                                            <td><display:column property="status" title="Status" sortable="true" defaultorder="descending"/></td>
+                                            <display:column class="td-actions" ><a href="detailsAction?id=${projectTable.id}"  class="btn btn-success"><i class="btn-icon-only"> View Detail </i></a></display:column>
                                            
 
                                             <display:setProperty name="paging.banner.no_items_found" value='<span class="pagebanner">No {0} found.</span>' />
@@ -139,8 +135,7 @@
                                             <display:setProperty name="paging.banner.page.separator" value="" />
                                         </display:table>
 
-                                        </tbody>
-                                    </table>
+                                      
 
 <!--                                    <div class="pagination">
                                         <ul>

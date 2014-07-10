@@ -179,7 +179,7 @@
                 <!-- Menu -->
                 <ul class="menu">
                     <li><a href="#about"  class="smoothscroll">About</a></li>
-                        <s:if test="#session.accLog != null">
+                        <s:if test="%{#session.accLog != null}">
                         <li><a href="#about"  class="smoothscroll">Home</a></li>
                         </s:if>
                     <li><a href="#login" id="login-btn" class="smoothscroll section-toggle">Login</a></li>

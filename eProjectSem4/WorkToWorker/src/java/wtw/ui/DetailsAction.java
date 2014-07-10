@@ -42,14 +42,24 @@ public class DetailsAction extends ActionSupport{
     public void setProject(Project project) {
         this.project = project;
     }
+
+    public Account getAccProject() {
+        return accProject;
+    }
+
+    public void setAccProject(Account accProject) {
+        this.accProject = accProject;
+    }
     
     
     private String id;
     private Project project;
+    private Account accProject;
 
     @Override
     public String execute() throws Exception {
         project = projectManager.getById(Integer.parseInt(id));
+        accProject = accountManager.getById(project.getIdCustomer().getId());
         ActionContext.getContext().getSession().put("project", project);
         return "success";
     }
