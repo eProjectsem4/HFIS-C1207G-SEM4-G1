@@ -422,15 +422,15 @@
 
                                                             <div class="controls">
                                                                 <div class="btn-group">
-                                                                    <a class="btn span6 category-label-work" rel="tooltip" title="Please provide your Category of Work"> Select Category of Work ( Option ) </a>
+                                                                    <a class="btn span6 category-label-work" rel="tooltip" title="Please provide your Category of Work (Other : Default )"> Select Category of Work ( Option ) </a>
                                                                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
                                                                     <ul class="dropdown-menu span6">
-                                                                        <li><a class="category-work"> Website </a></li>
-                                                                        <li><a class="category-work"> Software</a></li>
-                                                                        <li><a class="category-work"> Mobile</a></li>
-                                                                        <li><a class="category-work"> Design</a></li>
-                                                                        <li><a class="category-work"> Data Entry</a></li>
-                                                                        <li><a class="category-work"> Other ( Default )</a></li>
+                                                                        <li><a class="category-work">Website</a></li>
+                                                                        <li><a class="category-work">Software</a></li>
+                                                                        <li><a class="category-work">Mobile</a></li>
+                                                                        <li><a class="category-work">Design</a></li>
+                                                                        <li><a class="category-work">Data Entry</a></li>
+                                                                        <li><a class="category-work">Other</a></li>
                                                                         <!--<li class="divider"></li>
                                                                         <li><a href="#"><i class="i"></i> Make admin</a></li>-->
                                                                     </ul>
