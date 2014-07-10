@@ -44,6 +44,23 @@ public class ProjectJpaController implements Serializable {
         return emf.createEntityManager();
     }
     
+    public int getCountProjectInMonth(Date start,Date end){
+        String queryString = "SELECT p FROM Project p WHERE p.startDate > start and p.startDate < end";
+        TypedQuery<Project> query = getEntityManager().createQuery(queryString,Project.class);
+        query.setParameter("start", start);
+        query.setParameter("end", end);
+        return query.getResultList().size();
+    }
+    
+     public int getCountProjectInMonthAndStatus(Date start,Date end,String status){
+        String queryString = "SELECT p FROM Project p WHERE p.startDate > :start and p.startDate < :end and p.status = :status";
+        TypedQuery<Project> query = getEntityManager().createQuery(queryString,Project.class);
+        query.setParameter("start", start);
+        query.setParameter("end", end);
+        query.setParameter("status", status);
+        return query.getResultList().size();
+    }
+    
     public List<Project> getAll(){
         String queryString = "SELECT p FROM Project p";
         TypedQuery<Project> query = getEntityManager().createQuery(queryString,Project.class);

@@ -6,6 +6,7 @@
 
 package wtw.biz;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,5 +79,13 @@ public class ProjectManager {
         } catch (Exception ex) {
             Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public int getCountProjectInMonth(Date start,Date end){
+        return getController().getCountProjectInMonth(start,end);
+    }
+    
+    public int getCountProjectInMonthAndStatus(Date start,Date end,String status){
+        return getController().getCountProjectInMonthAndStatus(start,end,status);
     }
 }

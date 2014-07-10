@@ -81,6 +81,8 @@ public class LoginAction extends ActionSupport {
     public void setAccLog(Account accLog) {
         this.accLog = accLog;
     }
+    
+    
 
     private AccountManager lookupAccountManagerBean() {
         try {
