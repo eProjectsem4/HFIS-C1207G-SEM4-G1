@@ -4,8 +4,14 @@
     Author     : Admin
 --%>
 
+<%@page import="wtw.entities.Account"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib  prefix="s" uri="/struts-tags" %>
+<% Account accLog = (Account) request.getSession().getAttribute("accLog");
+    if (accLog == null) {
+        response.sendRedirect("index.jsp");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -66,7 +72,7 @@
                     <ul class="mainnav">
                         <li><a href="index.html"><i class="icon-dashboard"></i><span>Dashboard</span> </a>
                         </li>
-                        <li><a href="reports.html"><i class="icon-list-alt"></i><span>Reports</span> </a>
+                        <li><a href="barchart"><i class="icon-list-alt"></i><span>Reports</span> </a>
                         </li>
                         <li><a href="guidely.html"><i class="icon-facetime-video"></i><span>App Tour</span>
                             </a></li>
