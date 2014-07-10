@@ -58,22 +58,21 @@ public class RegisterAction extends ActionSupport{
             return "error";
         }
         
-        MessageDigest m = MessageDigest.getInstance("MD5");
-        m.reset();
-        m.update(password.getBytes());
-        byte[] digest = m.digest();
-        BigInteger bigInt = new BigInteger(1, digest);
-        String pwMd5 = bigInt.toString(16);
-        
-        Account acc = new Account();
-        acc.setFullname(fullName);
-        acc.setEmail(email);
-        acc.setPass(pwMd5);
-        acc.setRole(role);
-        messRegister = new ArrayList<String>();
-        accountManager.createAccount(acc);
+        MessageDigest digest =MessageDigest.getInstance("MD5");
+        digest.reset();
+        digest.update(password.getBytes());
+        byte[] dBs=digest.digest();
+        BigInteger bi =new BigInteger(1,dBs);
+        String pasMD5 =bi.toString(16);
+        Account account= new Account();
+        account.setFullname(fullName);
+        account.setEmail(email);
+        account.setRole(role);
+        account.setPass(pasMD5);
+        messRegister= new ArrayList<String>();
+        accountManager.createAccount(account);
         messRegister.add("Success !");
-        return "success";
+        return SUCCESS;
     }
     
     
