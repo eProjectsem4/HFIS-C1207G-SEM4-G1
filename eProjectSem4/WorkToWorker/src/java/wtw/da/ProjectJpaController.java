@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package wtw.da;
 
 import java.io.Serializable;
@@ -43,36 +42,37 @@ public class ProjectJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-    
-    public int getCountProjectInMonth(Date start,Date end){
+
+    public int getCountProjectInMonth(Date start, Date end) {
         String queryString = "SELECT p FROM Project p WHERE p.startDate > start and p.startDate < end";
-        TypedQuery<Project> query = getEntityManager().createQuery(queryString,Project.class);
+        TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);
         query.setParameter("start", start);
         query.setParameter("end", end);
         return query.getResultList().size();
     }
-    
-     public int getCountProjectInMonthAndStatus(Date start,Date end,String status){
+
+    public int getCountProjectInMonthAndStatus(Date start, Date end, String status) {
         String queryString = "SELECT p FROM Project p WHERE p.startDate > :start and p.startDate < :end and p.status = :status";
-        TypedQuery<Project> query = getEntityManager().createQuery(queryString,Project.class);
+        TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);
         query.setParameter("start", start);
         query.setParameter("end", end);
         query.setParameter("status", status);
         return query.getResultList().size();
     }
-    
-    public List<Project> getAll(){
+
+    public List<Project> getAll() {
         String queryString = "SELECT p FROM Project p";
-        TypedQuery<Project> query = getEntityManager().createQuery(queryString,Project.class);
+        TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);
         return query.getResultList();
     }
-     public List<Project> findBykeyword(String key) {
+
+    public List<Project> findBykeyword(String key) {
         String s = "SELECT p FROM Project p WHERE p.category = :category or p.name = :name or p.nameSkills = :nameSkills or p.price = :price or p.startDate = :startDate or p.status = :status";
         TypedQuery<Project> query = getEntityManager().createQuery(s, Project.class);
         query.setParameter("name", key);
         query.setParameter("nameSkills", key);
         query.setParameter("status", key);
-        query.setParameter("category",key);
+        query.setParameter("category", key);
         try {
             query.setParameter("price", Integer.parseInt(key));
         } catch (Exception e) {
@@ -81,8 +81,8 @@ public class ProjectJpaController implements Serializable {
         try {
             Date date = new java.sql.Date(2014, 07, 06);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            date=simpleDateFormat.parse(key);
-            query.setParameter("startDate",date);
+            date = simpleDateFormat.parse(key);
+            query.setParameter("startDate", date);
         } catch (Exception e) {
             query.setParameter("startDate", null);
         }
@@ -90,14 +90,14 @@ public class ProjectJpaController implements Serializable {
 
     }
 
-    public Project getById(int id){
+    public Project getById(int id) {
         String queryString = "SELECT p FROM Project p WHERE p.id = :id";
         TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);
         query.setParameter("id", id);
         return query.getResultList().get(0);
     }
-    
-     public List<Project> getByIdCustomer(Account customer){
+
+    public List<Project> getByIdCustomer(Account customer) {
         String queryString = "SELECT p FROM Project p WHERE p.idCustomer = :idCustomer";
         TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);
         query.setParameter("idCustomer", customer);
@@ -174,8 +174,8 @@ public class ProjectJpaController implements Serializable {
             Account idWorkerNew = project.getIdWorker();
             Account idCustomerOld = persistentProject.getIdCustomer();
             Account idCustomerNew = project.getIdCustomer();
-           // Collection<OrderProject> orderProjectCollectionOld = persistentProject.getOrderProjectCollection();
-           // Collection<OrderProject> orderProjectCollectionNew = project.getOrderProjectCollection();
+            // Collection<OrderProject> orderProjectCollectionOld = persistentProject.getOrderProjectCollection();
+            // Collection<OrderProject> orderProjectCollectionNew = project.getOrderProjectCollection();
             if (idWorkerNew != null) {
                 idWorkerNew = em.getReference(idWorkerNew.getClass(), idWorkerNew.getId());
                 project.setIdWorker(idWorkerNew);
@@ -184,13 +184,13 @@ public class ProjectJpaController implements Serializable {
                 idCustomerNew = em.getReference(idCustomerNew.getClass(), idCustomerNew.getId());
                 project.setIdCustomer(idCustomerNew);
             }
-          //  Collection<OrderProject> attachedOrderProjectCollectionNew = new ArrayList<OrderProject>();
-           // for (OrderProject orderProjectCollectionNewOrderProjectToAttach : orderProjectCollectionNew) {
+            //  Collection<OrderProject> attachedOrderProjectCollectionNew = new ArrayList<OrderProject>();
+            // for (OrderProject orderProjectCollectionNewOrderProjectToAttach : orderProjectCollectionNew) {
             //    orderProjectCollectionNewOrderProjectToAttach = em.getReference(orderProjectCollectionNewOrderProjectToAttach.getClass(), orderProjectCollectionNewOrderProjectToAttach.getId());
-           //     attachedOrderProjectCollectionNew.add(orderProjectCollectionNewOrderProjectToAttach);
-           // }
-           // orderProjectCollectionNew = attachedOrderProjectCollectionNew;
-         //   project.setOrderProjectCollection(orderProjectCollectionNew);
+            //     attachedOrderProjectCollectionNew.add(orderProjectCollectionNewOrderProjectToAttach);
+            // }
+            // orderProjectCollectionNew = attachedOrderProjectCollectionNew;
+            //   project.setOrderProjectCollection(orderProjectCollectionNew);
             project = em.merge(project);
             if (idWorkerOld != null && !idWorkerOld.equals(idWorkerNew)) {
                 idWorkerOld.getProjectCollection().remove(project);
@@ -208,23 +208,23 @@ public class ProjectJpaController implements Serializable {
                 idCustomerNew.getProjectCollection().add(project);
                 idCustomerNew = em.merge(idCustomerNew);
             }
-           // for (OrderProject orderProjectCollectionOldOrderProject : orderProjectCollectionOld) {
-           //     if (!orderProjectCollectionNew.contains(orderProjectCollectionOldOrderProject)) {
+            // for (OrderProject orderProjectCollectionOldOrderProject : orderProjectCollectionOld) {
+            //     if (!orderProjectCollectionNew.contains(orderProjectCollectionOldOrderProject)) {
             //        orderProjectCollectionOldOrderProject.setIdProject(null);
-             //       orderProjectCollectionOldOrderProject = em.merge(orderProjectCollectionOldOrderProject);
+            //       orderProjectCollectionOldOrderProject = em.merge(orderProjectCollectionOldOrderProject);
             //    }
-          //  }
-          //  for (OrderProject orderProjectCollectionNewOrderProject : orderProjectCollectionNew) {
+            //  }
+            //  for (OrderProject orderProjectCollectionNewOrderProject : orderProjectCollectionNew) {
             //    if (!orderProjectCollectionOld.contains(orderProjectCollectionNewOrderProject)) {
-              //      Project oldIdProjectOfOrderProjectCollectionNewOrderProject = orderProjectCollectionNewOrderProject.getIdProject();
-               //     orderProjectCollectionNewOrderProject.setIdProject(project);
-                //    orderProjectCollectionNewOrderProject = em.merge(orderProjectCollectionNewOrderProject);
-                 //   if (oldIdProjectOfOrderProjectCollectionNewOrderProject != null && !oldIdProjectOfOrderProjectCollectionNewOrderProject.equals(project)) {
-                  //      oldIdProjectOfOrderProjectCollectionNewOrderProject.getOrderProjectCollection().remove(orderProjectCollectionNewOrderProject);
-                   //     oldIdProjectOfOrderProjectCollectionNewOrderProject = em.merge(oldIdProjectOfOrderProjectCollectionNewOrderProject);
-                  //  }
-              //  }
-          //  }
+            //      Project oldIdProjectOfOrderProjectCollectionNewOrderProject = orderProjectCollectionNewOrderProject.getIdProject();
+            //     orderProjectCollectionNewOrderProject.setIdProject(project);
+            //    orderProjectCollectionNewOrderProject = em.merge(orderProjectCollectionNewOrderProject);
+            //   if (oldIdProjectOfOrderProjectCollectionNewOrderProject != null && !oldIdProjectOfOrderProjectCollectionNewOrderProject.equals(project)) {
+            //      oldIdProjectOfOrderProjectCollectionNewOrderProject.getOrderProjectCollection().remove(orderProjectCollectionNewOrderProject);
+            //     oldIdProjectOfOrderProjectCollectionNewOrderProject = em.merge(oldIdProjectOfOrderProjectCollectionNewOrderProject);
+            //  }
+            //  }
+            //  }
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -335,5 +335,29 @@ public class ProjectJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public int getProjectbyStartDate(Date startDate) {
+        try {
+            String query = "SELECT p FROM Project p WHERE p.startDate = :startDate";
+            TypedQuery<Project> createQuery = getEntityManager().createQuery(query, Project.class);
+            createQuery.setParameter("startDate", startDate);
+            return createQuery.getResultList().size();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+      public int getProjectbyCategory(Date startDate, String category) {
+        
+        try {
+            String query = "SELECT p FROM Project p WHERE p.startDate = :startDate and p.category = :category";
+            TypedQuery<Project> createQuery = getEntityManager().createQuery(query, Project.class);
+            createQuery.setParameter("startDate", startDate);
+            createQuery.setParameter("category", category);
+            return createQuery.getResultList().size();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

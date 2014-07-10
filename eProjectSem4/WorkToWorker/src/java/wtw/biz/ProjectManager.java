@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package wtw.biz;
 
 import java.util.Date;
@@ -32,46 +31,44 @@ public class ProjectManager {
 
     @PersistenceUnit(unitName = "WorkToWorkerPU")
     private EntityManagerFactory emf;
-    
+
     @Resource
     private UserTransaction utx;
-    
+
     private ProjectJpaController daController;
-    
-    private ProjectJpaController getController(){
-        if(daController == null){
+
+    private ProjectJpaController getController() {
+        if (daController == null) {
             daController = new ProjectJpaController(utx, emf);
         }
         return daController;
     }
-    
-      public List<Project> searchProject(String keyword){
+
+    public List<Project> searchProject(String keyword) {
         return getController().findBykeyword(keyword);
     }
-    
 
-    
-    public void createProject(Project p){
+    public void createProject(Project p) {
         try {
             getController().create(p);
         } catch (Exception ex) {
             Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public List<Project> getAll(){
+
+    public List<Project> getAll() {
         return getController().getAll();
     }
-    
-    public List<Project> getByIdCustomer(Account customer){
+
+    public List<Project> getByIdCustomer(Account customer) {
         return getController().getByIdCustomer(customer);
     }
-    
-    public Project getById(int id){
+
+    public Project getById(int id) {
         return getController().getById(id);
     }
-    
-    public void editProject(Project p){
+
+    public void editProject(Project p) {
         try {
             getController().edit(p);
         } catch (RollbackFailureException ex) {
@@ -80,12 +77,20 @@ public class ProjectManager {
             Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public int getCountProjectInMonth(Date start,Date end){
-        return getController().getCountProjectInMonth(start,end);
+
+    public int getCountProjectInMonth(Date start, Date end) {
+        return getController().getCountProjectInMonth(start, end);
     }
-    
-    public int getCountProjectInMonthAndStatus(Date start,Date end,String status){
-        return getController().getCountProjectInMonthAndStatus(start,end,status);
+
+    public int getCountProjectInMonthAndStatus(Date start, Date end, String status) {
+        return getController().getCountProjectInMonthAndStatus(start, end, status);
+    }
+
+    public int getCountProjectbyStartDate(Date start) {
+        return getController().getProjectbyStartDate(start);
+    }
+
+    public int getCountProjectbyStartDateAndCategory(Date start, String category) {
+        return getController().getProjectbyCategory(start, category);
     }
 }
