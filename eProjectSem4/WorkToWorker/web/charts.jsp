@@ -72,11 +72,11 @@
                     <ul class="mainnav">
                         <li><a href="index.html"><i class="icon-dashboard"></i><span>Dashboard</span> </a>
                         </li>
-                        <li><a href="barchart"><i class="icon-list-alt"></i><span>Reports</span> </a>
+                        <li><a href="#"><i class="icon-list-alt"></i><span>Reports</span> </a>
                         </li>
                         <li><a href="guidely.html"><i class="icon-facetime-video"></i><span>App Tour</span>
                             </a></li>
-                        <li class="active"><a href="charts.html"><i class="icon-bar-chart"></i><span>Charts</span> </a>
+                        <li class="active"><a href="barchart"><i class="icon-bar-chart"></i><span>Charts</span> </a>
                         </li>
                         <li><a href="shortcodes.html"><i class="icon-code"></i><span>Shortcodes</span> </a>
                         </li>
