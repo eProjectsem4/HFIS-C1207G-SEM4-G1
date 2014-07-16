@@ -23,7 +23,7 @@
         <meta charset="utf-8">
 
         <title>Work To Worker</title>
-
+<link rel="icon" type="image/png" href="img/WTW_logo.png">
         <meta name="description" content="A free single page responsive portfolio website html template for designers, developers and entrepreneurs.">
         <meta name="keywords" content="responsive, free, html, template">
 
@@ -53,9 +53,10 @@
         <link href="css/style.css" rel="stylesheet" type="text/css">
         <link href="css/pages/signin.css" rel="stylesheet" type="text/css">
 
-        <!-- Javascript -->
-        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <!-- Javascript -->        
+        <script src="js/code.jquery.com_jquery-1.10.2.js" type="text/javascript"></script>
+        <script src="js/code.jquery.com_ui_1.10.4_jquery-ui.js" type="text/javascript"></script>
+        
         <script src="js/jquery.validate.js" type="text/javascript"></script>
         <script src="js/additional-methods.js" type="text/javascript"></script>
         <script src="indexjs/js/jquery.fittext.js" type="text/javascript"></script>

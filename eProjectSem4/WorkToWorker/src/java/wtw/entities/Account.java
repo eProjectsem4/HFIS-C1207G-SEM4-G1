@@ -8,6 +8,7 @@ package wtw.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,6 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Account.findByCountry", query = "SELECT a FROM Account a WHERE a.country = :country"),
     @NamedQuery(name = "Account.findByImgProfile", query = "SELECT a FROM Account a WHERE a.imgProfile = :imgProfile")})
 public class Account implements Serializable {
+    @OneToMany(mappedBy = "idAccount")
+    private List<Balance> balanceList;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -72,6 +75,14 @@ public class Account implements Serializable {
     @Size(max = 50)
     @Column(name = "addresss")
     private String addresss;
+    @Size(max = 150)
+    @Column(name = "experience")
+    private String experience;
+    @Size(max = 150)
+    @Column(name = "skills")
+    private String skills;
+    @Column(name = "money")
+    private Integer money;
     @Size(max = 20)
     @Column(name = "country")
     private String country;
@@ -191,6 +202,30 @@ public class Account implements Serializable {
     public void setImgProfile(String imgProfile) {
         this.imgProfile = imgProfile;
     }
+    
+     public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
+    public Integer getMoney() {
+        return money;
+    }
+
+    public void setMoney(Integer money) {
+        this.money = money;
+    }
 
     @XmlTransient
     public Collection<FeedCustomer> getFeedCustomerCollection() {
@@ -309,6 +344,10 @@ public class Account implements Serializable {
         this.rateWorkerCollection1 = rateWorkerCollection1;
     }
 
+   
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -332,6 +371,15 @@ public class Account implements Serializable {
     @Override
     public String toString() {
         return "wtw.entities.Account[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public List<Balance> getBalanceList() {
+        return balanceList;
+    }
+
+    public void setBalanceList(List<Balance> balanceList) {
+        this.balanceList = balanceList;
     }
     
 }

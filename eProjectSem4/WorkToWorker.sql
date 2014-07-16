@@ -12,7 +12,11 @@ Create table Account(id int Primary Key identity,
 						[role] varchar(15),
 						addresss nvarchar(50),
 						country nvarchar(20),
-						imgProfile nvarchar(500))
+						imgProfile nvarchar(500),
+						experience nvarchar(150),
+						skills nvarchar(150),
+						[money] int
+						)
 
 Go
 
@@ -85,3 +89,9 @@ Create table Comment(id int primary key identity,
 						idTopic int foreign key references Topic(id),
 						content nvarchar(1000),
 						postDate Date)
+
+Create table Balance (
+					id int primary key identity,
+					idAccount int foreign key references Account(id),
+					[money] float,
+					)

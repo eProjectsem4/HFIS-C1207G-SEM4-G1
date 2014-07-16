@@ -17,6 +17,7 @@
     <head>
         <meta charset="utf-8">
         <title>Work To Worker</title>
+        <link rel="icon" type="image/png" href="img/WTW_logo.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -42,15 +43,6 @@
                         <ul class="nav pull-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-cog"></i>Account<b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="javascript:;">Settings</a></li>
-                                    <li><a href="javascript:;">Help</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="icon-user"></i> 
                                     <s:if test="%{#session.accLog != null}">
                                         <s:property value="#session.accLog.getFullname()"/>
@@ -58,14 +50,11 @@
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:;">Profile</a></li>
+                                    <li><a href="Profile?id=${sessionScope.accLog.id}">Profile</a></li>
                                     <li><a href="logoutAction">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
-                        <form class="navbar-search pull-right">
-                            <input type="text" class="search-query" placeholder="Search">
-                        </form>
                     </div>
                     <!--/.nav-collapse -->
                 </div>
@@ -78,8 +67,8 @@
             <div class="subnavbar-inner">
                 <div class="container">
                     <ul class="mainnav">
-                        <li class="active"><a href="home.jsp"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
-                        <li class="dropdown">
+                        <li><a href="home.jsp"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
+                        <li class="dropdown active">
                             <a href="index.html" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i><span>My Project</span> </a>
                             <ul class="dropdown-menu">
                                 <li><a href="createproject.jsp">Post Project</a></li>
@@ -114,7 +103,8 @@
                                             <tr>
                                                 <th>Project Name </th>
                                                 <th>Worker</th>
-                                                <th>Bids</th>
+                                                <th>Project Category</th>
+                                                <th>Skill</th>
                                                 <th class="td-actions"> </th>
                                             </tr>
                                         </thead>
@@ -122,10 +112,13 @@
 
                                             <s:iterator value="listOrder">
                                                 <tr>
-                                                    <td><a href="Profile?id=<s:property value="idAccount.id"></s:property>"></a></td>
+                                                    <td><a href="Profile?id=<s:property value="idAccount.id"/>"></a><s:property value="idProject.name"/></td>
                                                     <td><s:property value="idAccount.fullname"></s:property></td>
-                                                    <td><a href="agreeOrderAction?idAccount=<s:property value="idAccount.id"></s:property>">Agree</a></td>
-                                                    <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
+                                                    <td><s:property value="idProject.category"></s:property></td>
+                                                    <td><s:property value="idProject.nameSkills"></s:property></td>
+                                                    <td class="td-actions">
+                                                        <a href="agreeOrderAction?idAccount=<s:property value="idAccount.id"/>" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a>
+                                                    </td>
                                                     </tr>
                                             </s:iterator>
                                         </tbody>
@@ -149,34 +142,20 @@
             <div class="extra-inner">
                 <div class="container">
                     <div class="row">
+                        <div class="row">
                         <div class="span3">
                             <h4>
-                                About Free Admin Template
-                            </h4>
+                                About Work To Worker</h4>
                             <ul>
-                                <li><a href="javascript:;">EGrappler.com</a></li>
-                                <li><a href="javascript:;">Web Development Resources</a></li>
-                                <li><a href="javascript:;">Responsive HTML5 Portfolio Templates</a></li>
-                                <li><a href="javascript:;">Free Resources and Scripts</a></li>
+                                <li><a href="javascript:;">Web Development Application</a></li>
+                                <li><a href="javascript:;">Responsive Web </a></li>
+                                <li><a href="javascript:;">Project</a></li>
                             </ul>
                         </div>
                         <!-- /span3 -->
                         <div class="span3">
                             <h4>
-                                Support
-                            </h4>
-                            <ul>
-                                <li><a href="javascript:;">Frequently Asked Questions</a></li>
-                                <li><a href="javascript:;">Ask a Question</a></li>
-                                <li><a href="javascript:;">Video Tutorial</a></li>
-                                <li><a href="javascript:;">Feedback</a></li>
-                            </ul>
-                        </div>
-                        <!-- /span3 -->
-                        <div class="span3">
-                            <h4>
-                                Something Legal
-                            </h4>
+                                 Legal</h4>
                             <ul>
                                 <li><a href="javascript:;">Read License</a></li>
                                 <li><a href="javascript:;">Terms of Use</a></li>
@@ -184,17 +163,6 @@
                             </ul>
                         </div>
                         <!-- /span3 -->
-                        <div class="span3">
-                            <h4>
-                                Open Source jQuery Plugins
-                            </h4>
-                            <ul>
-                                <li><a href="http://www.egrappler.com">Open Source jQuery Plugins</a></li>
-                                <li><a href="http://www.egrappler.com;">HTML5 Responsive Tempaltes</a></li>
-                                <li><a href="http://www.egrappler.com;">Free Contact Form Plugin</a></li>
-                                <li><a href="http://www.egrappler.com;">Flat UI PSD</a></li>
-                            </ul>
-                        </div>
                         <!-- /span3 -->
                     </div>
                     <!-- /row -->

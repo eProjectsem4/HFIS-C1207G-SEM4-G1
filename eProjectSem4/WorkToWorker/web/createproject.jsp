@@ -18,7 +18,7 @@
     <head>
         <meta charset="utf-8">
         <title>Work to Worker</title>
-
+<link rel="icon" type="image/png" href="img/WTW_logo.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
 
@@ -27,12 +27,8 @@
 
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
         <link href="css/font-awesome.css" rel="stylesheet">
-
+        <link href="css/datepicker.css" rel="stylesheet" type="text/css"/>
         <link href="css/style.css" rel="stylesheet">
-
-
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
@@ -40,9 +36,9 @@
         <![endif]-->
 
         <script src="js/jquery-1.7.2.min.js"></script>
-        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <script src="js/code.jquery.com_ui_1.10.4_jquery-ui.js" type="text/javascript"></script>
 
-        <script src="http://tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+        <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
         <script src="js/jquery.validate.js"></script>
         <script src="js/additional-methods.js"></script>
         <script>
@@ -90,12 +86,32 @@
 //
 //                });
 
+                var dateToday = new Date();
+
+                $("#from").datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    minDate: dateToday,
+                    onClose: function(selectedDate) {
+                        $("#to").datepicker("option", "minDate", selectedDate);
+                    }
+                });                               
+                
+                $("#to").datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    minDate: dateToday,
+                    onClose: function(selectedDate) {
+                        $("#from").datepicker("option", "maxDate", selectedDate);
+                    }
+                });
+
                 $('#fileUpload').change(function() {
                     var filepath = $('#fileUpload').val();
-                    
-                        // update the file-path text using case-insensitive regex
-                        filepath = filepath.replace(/C:\\fakepath\\/i, '');
-                    
+
+                    // update the file-path text using case-insensitive regex
+                    filepath = filepath.replace(/C:\\fakepath\\/i, '');
+
                     $('#uploadFile').val(filepath);
 
                 });
@@ -107,11 +123,11 @@
                     return this.optional(element) || (element.files[0].size <= param)
                 });
 
-                 var validator =  $('#edit-profile').submit(function() {
-			// update underlying textarea before submit validation
-			tinyMCE.triggerSave();
-		}).validate({
-                   ignore: "",
+                var validator = $('#edit-profile').submit(function() {
+                    // update underlying textarea before submit validation
+                    tinyMCE.triggerSave();
+                }).validate({
+                    ignore: "",
                     rules: {
                         name: {
                             required: true,
@@ -133,7 +149,12 @@
                             number: true,
                             min: 10,
                             max: 10000,
-
+                        },
+                        to: {
+                            required: true,
+                        },
+                        from: {
+                            required: true,
                         },
                         fileUpload: {
                             extension: "rar|zip",
@@ -157,33 +178,33 @@
                             minlength: "Your project skills must consist of at least 1 skill",
                             maxlength: "Your project skill  maximum 50 characters",
                         },
-                         price: {
+                        price: {
                             required: "Please enter price for your project ",
                             min: "Your project must be at least $ 10",
                             max: "Your project is only the maximum $ 10,000",
                         },
                         fileUpload: {
                             extension: "File must be RAR or ZIP",
-                            filesize: "File must less than 10MB"
+                            filesize: "File must less than 2MB"
                         }
                     }
                 });
 
                 validator.focusInvalid = function() {
-			// put focus on tinymce on submit validation
-			if( this.settings.focusInvalid ) {
-				try {
-					var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
-					if (toFocus.is("textarea")) {
-						tinyMCE.get(toFocus.attr("id")).focus();
-					} else {
-						toFocus.filter(":visible").focus();
-					}
-				} catch(e) {
-					// ignore IE throwing errors when focusing hidden elements
-				}
-			}
-		}
+                    // put focus on tinymce on submit validation
+                    if (this.settings.focusInvalid) {
+                        try {
+                            var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
+                            if (toFocus.is("textarea")) {
+                                tinyMCE.get(toFocus.attr("id")).focus();
+                            } else {
+                                toFocus.filter(":visible").focus();
+                            }
+                        } catch (e) {
+                            // ignore IE throwing errors when focusing hidden elements
+                        }
+                    }
+                }
 
             });
         </script>
@@ -215,7 +236,6 @@
                 "Scheme",
                 ".NET",
                 "HTML",
-                
             ];
 
             $(function() {
@@ -282,7 +302,7 @@
             #edit-profile label.error {
                 margin-top : 9px;
                 color : red;
-                width: auto;
+                max-width: 200px;
                 display: inline;
             }
 
@@ -294,11 +314,13 @@
             .fileUpload > label {
                 color: white !important;
             }
+
+
         </style>
     </head>
 
     <body>
-       <div class="navbar navbar-fixed-top">
+        <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -306,15 +328,6 @@
                     </a><a class="brand" href="home.jsp">Work To Worker </a>
                     <div class="nav-collapse">
                         <ul class="nav pull-right">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-cog"></i>Account<b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="javascript:;">Settings</a></li>
-                                    <li><a href="javascript:;">Help</a></li>
-                                </ul>
-                            </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="icon-user"></i> 
@@ -329,9 +342,6 @@
                                 </ul>
                             </li>
                         </ul>
-                        <form class="navbar-search pull-right">
-                            <input type="text" class="search-query" placeholder="Search">
-                        </form>
                     </div>
                     <!--/.nav-collapse -->
                 </div>
@@ -344,8 +354,8 @@
             <div class="subnavbar-inner">
                 <div class="container">
                     <ul class="mainnav">
-                        <li class="active"><a href="home.jsp"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
-                        <li class="dropdown">
+                        <li><a href="home.jsp"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
+                        <li class="dropdown active">
                             <a href="index.html" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i><span>My Project</span> </a>
                             <ul class="dropdown-menu">
                                 <li><a href="createproject.jsp">Post Project</a></li>
@@ -425,12 +435,12 @@
                                                                     <a class="btn span6 category-label-work" rel="tooltip" title="Please provide your Category of Work (Other : Default )"> Select Category of Work ( Option ) </a>
                                                                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
                                                                     <ul class="dropdown-menu span6">
-                                                                        <li><a class="category-work">Website</a></li>
-                                                                        <li><a class="category-work">Software</a></li>
-                                                                        <li><a class="category-work">Mobile</a></li>
-                                                                        <li><a class="category-work">Design</a></li>
-                                                                        <li><a class="category-work">Data Entry</a></li>
-                                                                        <li><a class="category-work">Other</a></li>
+                                                                        <li><a class="category-work"> Website </a></li>
+                                                                        <li><a class="category-work"> Software</a></li>
+                                                                        <li><a class="category-work"> Mobile</a></li>
+                                                                        <li><a class="category-work"> Design</a></li>
+                                                                        <li><a class="category-work"> Data Entry</a></li>
+                                                                        <li><a class="category-work"> Other</a></li>
                                                                         <!--<li class="divider"></li>
                                                                         <li><a href="#"><i class="i"></i> Make admin</a></li>-->
                                                                     </ul>
@@ -448,6 +458,18 @@
                                                         </div> <!-- /control-group -->
 
                                                         <div class="control-group">
+                                                            <label class="control-label" for="projectname">Start Date of project</label>
+                                                            <div class="controls">
+                                                                <input type="text" class="span6" id="from" name="from" placeholder="Start Date" rel="tooltip" title="Please provide your start date ">
+                                                            </div> 
+                                                            <span style="margin-top: 10px">&nbsp;</span>
+                                                            <label class="control-label" for="projectname">End Date of project</label>
+                                                            <div class="controls">
+                                                                <input type="text" class="span6" id="to" name="to" placeholder="End Date" rel="tooltip" title="Please provide your end date ">
+                                                            </div> <!-- /controls -->
+                                                        </div> <!-- /control-group -->
+
+                                                        <div class="control-group">
                                                             <label class="control-label" for="skill">Some skills that relate to the project : </label>
 
                                                             <div class="controls">																
@@ -461,7 +483,7 @@
                                                                 <textarea class="span10" id="description" name="description"  rel="tooltip"></textarea>
                                                             </div> <!-- /controls -->
                                                         </div>
-                                                    <!--file upload-->
+                                                        <!--file upload-->
                                                         <div class="control-group">
                                                             <label class="control-label" for="uploadFile">Attach File </label>
 
@@ -540,34 +562,20 @@
                 <div class="container">
 
                     <div class="row">
+                        <div class="row">
                         <div class="span3">
                             <h4>
-                                About Free Admin Template
-                            </h4>
+                                About Work To Worker</h4>
                             <ul>
-                                <li><a href="javascript:;">EGrappler.com</a></li>
-                                <li><a href="javascript:;">Web Development Resources</a></li>
-                                <li><a href="javascript:;">Responsive HTML5 Portfolio Templates</a></li>
-                                <li><a href="javascript:;">Free Resources and Scripts</a></li>
+                                <li><a href="javascript:;">Web Development Application</a></li>
+                                <li><a href="javascript:;">Responsive Web </a></li>
+                                <li><a href="javascript:;">Project</a></li>
                             </ul>
                         </div>
                         <!-- /span3 -->
                         <div class="span3">
                             <h4>
-                                Support
-                            </h4>
-                            <ul>
-                                <li><a href="javascript:;">Frequently Asked Questions</a></li>
-                                <li><a href="javascript:;">Ask a Question</a></li>
-                                <li><a href="javascript:;">Video Tutorial</a></li>
-                                <li><a href="javascript:;">Feedback</a></li>
-                            </ul>
-                        </div>
-                        <!-- /span3 -->
-                        <div class="span3">
-                            <h4>
-                                Something Legal
-                            </h4>
+                                 Legal</h4>
                             <ul>
                                 <li><a href="javascript:;">Read License</a></li>
                                 <li><a href="javascript:;">Terms of Use</a></li>
@@ -575,17 +583,6 @@
                             </ul>
                         </div>
                         <!-- /span3 -->
-                        <div class="span3">
-                            <h4>
-                                Open Source jQuery Plugins
-                            </h4>
-                            <ul>
-                                <li><a href="http://www.egrappler.com">Open Source jQuery Plugins</a></li>
-                                <li><a href="http://www.egrappler.com;">HTML5 Responsive Tempaltes</a></li>
-                                <li><a href="http://www.egrappler.com;">Free Contact Form Plugin</a></li>
-                                <li><a href="http://www.egrappler.com;">Flat UI PSD</a></li>
-                            </ul>
-                        </div>
                         <!-- /span3 -->
                     </div> <!-- /row -->
 
@@ -623,7 +620,7 @@
         <script src="js/bootstrap.js"></script>
 
         <script src="js/base.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.js" type="text/javascript"></script>
+        <script src="js/cdnjs.cloudflare.com_ajax_libs_less.js_1.7.1_less.js" type="text/javascript"></script>
     </body>
 
 </html>

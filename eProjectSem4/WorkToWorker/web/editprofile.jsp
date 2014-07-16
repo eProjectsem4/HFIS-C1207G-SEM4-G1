@@ -19,7 +19,7 @@
     <head>
         <meta charset="utf-8">
         <title>Work to Worker</title>
-
+<link rel="icon" type="image/png" href="img/WTW_logo.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
 
@@ -32,7 +32,7 @@
         <link href="css/style.css" rel="stylesheet">
 
 
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+        <link href="css/code.jquery.com_ui_1.10.4_themes_smoothness_jquery-ui.css" rel="stylesheet" type="text/css"/>
 
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -41,9 +41,9 @@
         <![endif]-->
 
         <script src="js/jquery-1.7.2.min.js"></script>
-        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+       <script src="js/code.jquery.com_ui_1.10.4_jquery-ui.js" type="text/javascript"></script>
 
-        <script src="http://tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+        <script src="js/tinymce.cachefly.net_4.1_tinymce.min.js" type="text/javascript"></script>
         <script src="js/jquery.validate.js"></script>
         <script src="js/additional-methods.js"></script>
         <script>
@@ -75,6 +75,17 @@
                         },
                         country: {
                             maxlength: 20,
+                        },
+                        experience: {
+                            maxlength: 100
+                        },
+                        skills: {
+                            maxlength: 100
+                        },
+                        money:{
+                            number: true,
+                            min: 10,
+                            max: 10000,
                         }
 
                     }
@@ -84,7 +95,94 @@
             });
         </script>
 
+        <script>
+            var availableTags = [
+                "ActionScript",
+                "AppleScript",
+                "Asp",
+                "BASIC",
+                "C",
+                "C#",
+                "C++",
+                "Clojure",
+                "COBOL",
+                "ColdFusion",
+                "Erlang",
+                "Fortran",
+                "Groovy",
+                "Haskell",
+                "Java",
+                "JavaScript",
+                "Lisp",
+                "Perl",
+                "PHP",
+                "Python",
+                "Ruby",
+                "Scala",
+                "Scheme",
+                ".NET",
+                "HTML",
+            ];
 
+            $(function() {
+
+                function split(val) {
+                    return val.split(/ \s*/);
+                }
+                function extractLast(term) {
+                    return split(term).pop();
+                }
+
+                var userrequest = null;
+
+                $("#skills")
+                        // don't navigate away from the field on tab when selecting an item
+                        .bind("keydown", function(event) {
+                            srcO = $('#skills').val();
+                            if (event.keyCode === $.ui.keyCode.TAB &&
+                                    $(this).data("ui-autocomplete").menu.active) {
+                                event.preventDefault();
+                            }
+                        })
+                        .autocomplete({
+                            minLength: 0,
+                            source: function(request, response) {
+                                // delegate back to autocomplete, but extract the last term
+                                userrequest = request.term;
+                                response($.ui.autocomplete.filter(
+                                        availableTags, extractLast(request.term)));
+                            },
+                            focus: function() {
+                                // prevent value inserted on focus
+                                return false;
+                            },
+                            select: function(event, ui) {
+                                var src = $('#skills').val();
+                                var terms = split(this.value);
+                                if ((src.indexOf(ui.item.value)) == -1) {
+                                    // remove the current input
+                                    terms.pop();
+                                    // add the selected item
+                                    terms.push(ui.item.value);
+                                    // add placeholder to get the comma-and-space at the end
+                                    this.value = terms;
+
+                                    return false;
+                                } else {
+                                    $('#skill').val(src);
+                                    return false;
+                                }
+
+                            }, response: function(event, ui) {
+                                var src = $('#skills').val();
+                                if (ui.content.length <= 0) {
+                                    $('#skills').val(src.replace(extractLast(userrequest), ""));
+                                }
+
+                            }
+                        });
+            });
+        </script>
         <style>
             #edit-profile label.error {
                 margin-top : 9px;
@@ -115,15 +213,6 @@
                         <ul class="nav pull-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-cog"></i>Account<b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="javascript:;">Settings</a></li>
-                                    <li><a href="javascript:;">Help</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="icon-user"></i> 
                                     <s:if test="%{#session.accLog != null}">
                                         <s:property value="#session.accLog.getFullname()"/>
@@ -131,14 +220,11 @@
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:;">Profile</a></li>
+                                    <li><a href="Profile?id=${sessionScope.accLog.id}">Profile</a></li>
                                     <li><a href="logoutAction">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
-                        <form class="navbar-search pull-right">
-                            <input type="text" class="search-query" placeholder="Search">
-                        </form>
                     </div>
                     <!--/.nav-collapse -->
                 </div>
@@ -212,8 +298,6 @@
                                                         </div> <!-- /control-group -->
                                                     </div>
 
-
-
                                                     <div class="control-group">
                                                         <label class="control-label" for="projectname">Your Name</label>
                                                         <div class="controls">
@@ -250,7 +334,34 @@
                                                         </div> <!-- /controls -->
                                                     </div>
 
+                                                    <s:if test="%{#session.accLog.role == 'Worker'}">
+                                                        <div class="control-group">
+                                                            <label class="control-label" for="projectdetails">Experience : </label>
+                                                            <div class="controls">
+                                                                <input name="experience" class="span6" id="experience" value="<s:property value="accLog.experience"/>" rel="tooltip" title="Please provide your experience "/> 
+                                                            </div> <!-- /controls -->
+                                                        </div>
 
+                                                        <div class="control-group">
+                                                            <label class="control-label" for="projectdetails">Skills : </label>
+                                                            <div class="controls">
+                                                                <input name="skills" class="span6" id="skills" value="<s:property value="accLog.skills"/>" rel="tooltip" title="Please provide your skills "/> 
+                                                            </div> <!-- /controls -->
+                                                        </div>
+
+                                                        <div class="control-group">
+                                                            <label class="control-label" for="project-price">Price : </label>
+                                                            <div class="controls">
+                                                                <div class="btn-group">
+                                                                    <div class="input-prepend input-append">
+                                                                        <span class="add-on">$</span>
+                                                                        <input class="span2" id="money" name="money" value="<s:property value="accLog.money"/>" type="text" rel="tooltip" title="Please provide your price"/>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>	<!-- /controls -->
+                                                        </div> 
+                                                    </s:if>
 
 
                                                     <div class="form-actions">
@@ -285,34 +396,20 @@
                 <div class="container">
 
                     <div class="row">
+                        <div class="row">
                         <div class="span3">
                             <h4>
-                                About Free Admin Template
-                            </h4>
+                                About Work To Worker</h4>
                             <ul>
-                                <li><a href="javascript:;">EGrappler.com</a></li>
-                                <li><a href="javascript:;">Web Development Resources</a></li>
-                                <li><a href="javascript:;">Responsive HTML5 Portfolio Templates</a></li>
-                                <li><a href="javascript:;">Free Resources and Scripts</a></li>
+                                <li><a href="javascript:;">Web Development Application</a></li>
+                                <li><a href="javascript:;">Responsive Web </a></li>
+                                <li><a href="javascript:;">Project</a></li>
                             </ul>
                         </div>
                         <!-- /span3 -->
                         <div class="span3">
                             <h4>
-                                Support
-                            </h4>
-                            <ul>
-                                <li><a href="javascript:;">Frequently Asked Questions</a></li>
-                                <li><a href="javascript:;">Ask a Question</a></li>
-                                <li><a href="javascript:;">Video Tutorial</a></li>
-                                <li><a href="javascript:;">Feedback</a></li>
-                            </ul>
-                        </div>
-                        <!-- /span3 -->
-                        <div class="span3">
-                            <h4>
-                                Something Legal
-                            </h4>
+                                 Legal</h4>
                             <ul>
                                 <li><a href="javascript:;">Read License</a></li>
                                 <li><a href="javascript:;">Terms of Use</a></li>
@@ -320,17 +417,6 @@
                             </ul>
                         </div>
                         <!-- /span3 -->
-                        <div class="span3">
-                            <h4>
-                                Open Source jQuery Plugins
-                            </h4>
-                            <ul>
-                                <li><a href="http://www.egrappler.com">Open Source jQuery Plugins</a></li>
-                                <li><a href="http://www.egrappler.com;">HTML5 Responsive Tempaltes</a></li>
-                                <li><a href="http://www.egrappler.com;">Free Contact Form Plugin</a></li>
-                                <li><a href="http://www.egrappler.com;">Flat UI PSD</a></li>
-                            </ul>
-                        </div>
                         <!-- /span3 -->
                     </div> <!-- /row -->
 

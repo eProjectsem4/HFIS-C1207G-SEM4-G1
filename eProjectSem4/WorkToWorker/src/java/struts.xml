@@ -100,6 +100,10 @@
             <result name="success">allproject.jsp</result>
         </action>
         
+        <action name="recharge" class="wtw.ui.CreditCardAction">
+            <result name="success">credit.jsp</result>
+        </action>
+        
         <action name="fetchName" class="wtw.ui.ExprotXlsAction" method="fetchName">
             <result name="success">exporttoexcel.jsp</result>
         </action>

@@ -17,6 +17,7 @@ import javax.naming.NamingException;
 import wtw.biz.AccountManager;
 import wtw.biz.OrderManager;
 import wtw.biz.ProjectManager;
+import wtw.entities.Account;
 import wtw.entities.OrderProject;
 import wtw.entities.Project;
 
@@ -29,7 +30,13 @@ public class AgreeOrderAction extends ActionSupport{
     ProjectManager projectManager = lookupProjectManagerBean();
     OrderManager orderManager = lookupOrderManagerBean();
 
-    
+    public Account getCurrAcc() {
+        return currAcc;
+    }
+
+    public void setCurrAcc(Account currAcc) {
+        this.currAcc = currAcc;
+    }  
     
     public String getIdAccount() {
         return idAccount;
@@ -49,6 +56,7 @@ public class AgreeOrderAction extends ActionSupport{
     
     private String idAccount;
     private Project project;
+    private Account currAcc;
 
     @Override
     public String execute() throws Exception {
@@ -58,8 +66,9 @@ public class AgreeOrderAction extends ActionSupport{
         for (int i = 0; i < listOrder.size(); i++) {
             orderManager.destroy(listOrder.get(i).getId());
         }
+        currAcc = accountManager.getById(Integer.parseInt(idAccount));
         project.setStatus("Process");
-        project.setIdWorker(accountManager.getById(Integer.parseInt(idAccount)));
+        project.setIdWorker(currAcc);
         projectManager.editProject(project);
         return "success";
     }

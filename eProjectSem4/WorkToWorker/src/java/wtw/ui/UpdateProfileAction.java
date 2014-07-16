@@ -31,8 +31,35 @@ public class UpdateProfileAction extends ActionSupport{
     private String company;
     private String address;
     private String country;
+    private String experience;
+    private String skills;
+    private int money;
     private List<String> messEdit;
 
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+    
     public Account getAccLog() {
         return accLog;
     }
@@ -116,7 +143,9 @@ public class UpdateProfileAction extends ActionSupport{
             return "success";
         }
         
-        accLog.setFullname(fullname);
+        if(fullname != null){
+         accLog.setFullname(fullname);
+        }
         if(phone != null){
             accLog.setPhone(phone);
         }
@@ -129,6 +158,16 @@ public class UpdateProfileAction extends ActionSupport{
         if(country != null){
             accLog.setCountry(country);
         }
+        if(experience != null){
+            accLog.setExperience(experience);
+        }
+        if(skills != null){
+            accLog.setSkills(skills);
+        }
+        if(money != 0){
+            accLog.setMoney(money);
+        }
+        
         accountManager.edit(accLog);
         messEdit.add("Success !");
         return "success";

@@ -39,6 +39,7 @@ textarea {
 .table td {
 	vertical-align: middle;
 	font-size: 15px;
+	padding: 15px;
 }
 
 .table-bordered th {

@@ -1,4 +1,3 @@
-
 <%-- 
     Document   : createproject
     Created on : Jun 16, 2014, 12:37:23 PM
@@ -28,12 +27,8 @@
 
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
         <link href="css/font-awesome.css" rel="stylesheet">
-
+        <link href="css/datepicker.css" rel="stylesheet" type="text/css"/>
         <link href="css/style.css" rel="stylesheet">
-
-
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-
 
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
@@ -42,8 +37,6 @@
 
         <script src="js/jquery-1.7.2.min.js"></script>
         <script src="js/code.jquery.com_ui_1.10.4_jquery-ui.js" type="text/javascript"></script>
-
-        <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
         <script src="js/jquery.validate.js"></script>
         <script src="js/additional-methods.js"></script>
         <script>
@@ -53,90 +46,45 @@
         </script>
 
         <script>
-            tinyMCE.init({
-                mode: "textareas",
-                menubar: false,
-                extended_valid_elements: "span[!class]",
-                valid_styles: {'*': 'text-decoration'},
-                // update validation status on change
-                onchange_callback: function(editor) {
-                    tinyMCE.triggerSave();
-                    $("#content").valid();
-                }
-            });
-            
-            $.validator.methods.equal = function(value, element, param) {
-		return value == param;
-            };
 
             $(document).ready(function() {
 
-                $.validator.addMethod('filesize', function(value, element, param) {
-                    // param = size (en bytes) 
-                    // element = element to validate (<input>)
-                    // value = value of the element (file name)
-                    return this.optional(element) || (element.files[0].size <= param)
-                });
 
-                var vali = $('#edit-profile').submit(function() {
-			// update underlying textarea before submit validation
-			tinyMCE.triggerSave();
-		}).validate({
+                var validator = $('#edit-profile').validate({
                     rules: {
-                        ignore: "",
-                        title: {
+                        creaditCard: {
                             required: true,
-                            minlength: 15,
-                            maxlength: 100
+                            creditcard: true
                         },
-                        content: {
+                        money: {
                             required: true,
-                            minlength: 30,
-                            maxlength: 1000
-                        },
-                        math:{
-                            equal: 11
+                            number: true,
+                            min: 10,
+                            max: 10000,
                         }
 
                     },
-                    messages:{
-                        math: { 
-                           equal: "Please enter the correct result!"
-                       }
-                    },
-			errorPlacement: function(label, element) {
-				// position error label after generated textarea
-				if (element.is("textarea")) {
-					label.insertAfter(element.next());
-				} else {
-					label.insertAfter(element)
-				}
-			}
+                    messages: {
+                        creaditCard: {
+                            required: "Please enter your creadit card number",
+                            creditcard: "Please enter your creadit card number",
+                        },
+                        money: {
+                            required: "Please enter money for your account ",
+                            min: "Your project must be at least $ 10",
+                            max: "Your project is only the maximum $ 10,000",
+                        }
+                    }
                 });
-
-                vali.focusInvalid = function() {
-			// put focus on tinymce on submit validation
-			if( this.settings.focusInvalid ) {
-				try {
-					var toFocus = $(this.findLastActive() || this.errorList.length && this.errorList[0].element || []);
-					if (toFocus.is("textarea")) {
-						tinyMCE.get(toFocus.attr("id")).focus();
-					} else {
-						toFocus.filter(":visible").focus();
-					}
-				} catch(e) {
-					// ignore IE throwing errors when focusing hidden elements
-				}
-			}
-		}
 
             });
         </script>
+
         <style>
             #edit-profile label.error {
                 margin-top : 9px;
                 color : red;
-                width: auto;
+                max-width: 200px;
                 display: inline;
             }
 
@@ -148,6 +96,8 @@
             .fileUpload > label {
                 color: white !important;
             }
+
+
         </style>
     </head>
 
@@ -169,7 +119,7 @@
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="Profile?id=${sessionScope.accLog.id}">Profile</a></li>
+                                    <li><a href="javascript:;">Profile</a></li>
                                     <li><a href="logoutAction">Logout</a></li>
                                 </ul>
                             </li>
@@ -187,14 +137,14 @@
                 <div class="container">
                     <ul class="mainnav">
                         <li><a href="home.jsp"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
-                        <li class="dropdown">
+                        <li class="dropdown active">
                             <a href="index.html" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i><span>My Project</span> </a>
                             <ul class="dropdown-menu">
                                 <li><a href="createproject.jsp">Post Project</a></li>
                                 <li><a href="allProjectAction">List Project</a></li>
                             </ul>
                         </li>
-                        <li class="active"><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
+                        <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
                         <li><a href="barchart"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
                         <li><a href="#"><i class="icon-comment"></i><span>Help</span> </a> </li>
                     </ul>
@@ -219,7 +169,7 @@
 
                                 <div class="widget-header">
                                     <i class="icon-user"></i>
-                                    <h3>Create Topic</h3>
+                                    <h3>Your project details</h3>
                                 </div> <!-- /widget-header -->
 
                                 <div class="widget-content">
@@ -227,17 +177,25 @@
 
 
                                     <div class="tabbable">
+                                        <!--<ul class="nav nav-tabs">
+                                            <li>
+                                                <a href="#formcontrols" data-toggle="tab">Form Controls</a>
+                                            </li>
+                                            <li class="active"><a href="#jscontrols" data-toggle="tab">JS Controls</a></li>
+                                        </ul>
+          
+                                        <br>-->
 
                                         <!--<div class="tab-content">-->
                                         <div class="tab-pane active" id="formcontrols">
-                                            <form id="edit-profile" class="form-horizontal" enctype="multipart/form-data" method="POST" action="createTopicAction">
+                                            <form id="edit-profile" class="form-horizontal" enctype="multipart/form-data" method="POST" action="recharge">
                                                 <fieldset>
 
                                                     <div class="control-group" >
 
                                                         <div class="controls" id="msg-errors">
 
-                                                            <s:iterator value="messCreate">
+                                                            <s:iterator value="mess">
                                                                 <div class="alert alert-success">     
                                                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                                                                     <s:property/>
@@ -246,62 +204,32 @@
                                                         </div> <!-- /control-group -->
                                                     </div>
 
-                                                    
-
                                                     <div class="control-group">
-                                                        <label class="control-label" for="projectname">Topic Title</label>
+                                                        <label class="control-label" for="projectname">Your Credit Card</label>
                                                         <div class="controls">
-                                                            <input type="text" class="span6" id="title" name="title"  rel="tooltip" title="Please provide topic title ">
+                                                            <input type="text" class="span6" id="creaditCard" name="creaditCard" placeholder="Credit Card Number" rel="tooltip" title="Please provide your project name ">
 
                                                         </div> <!-- /controls -->
                                                     </div> <!-- /control-group -->
-
-                                                    
-
-                                                    <div class="control-group">
-                                                        <label class="control-label" for="projectdetails">Content</label>
-                                                        <div class="controls" rel="tooltip" title="Please provide content ">
-                                                            <textarea class="span10" id="content" name="content"></textarea>
-                                                        </div> <!-- /controls -->
-                                                    </div>
-                                                    <!--file upload-->
-                                                     
+ 
 
                                                     <div class="control-group">
-                                                        <label class="control-label" for="project-price">Please enter the correct result! </label>
+                                                        <label class="control-label" for="project-price">What your money? </label>
 
                                                         <div class="controls">
                                                             <div class="btn-group">
-                                                                <div class="input-prepend input-append" >
-                                                                    <span class="add-on">7 + 4</span>
-                                                                    <input class="span2" id="math" name="math" type="text" rel="tooltip" title="Please enter the correct result!">
+                                                                <div class="input-prepend input-append">
+                                                                    <span class="add-on">$</span>
+                                                                    <input class="span2" id="money" name="money" type="text">
                                                                 </div>
                                                                 <!--                                                                    <input type="text"  id="project-price" value="200" rel="tooltip" />-->
                                                             </div>
                                                         </div>	<!-- /controls -->
                                                     </div> <!-- /control-group -->
 
-                                                    <!--   <div class="control-group">
-                                                          <label class="control-label" for="radiobtns">Button sizes</label>
-             
-                                                          <div class="controls">
-                                                              <a class="btn btn-large" href="#"><i class="icon-star"></i> Star</a>
-                                                              <a class="btn btn-small" href="#"><i class="icon-star"></i> Star</a>
-                                                              <a class="btn btn-mini" href="#"><i class="icon-star"></i> Star</a>
-                                                          </div>	<!-- /controls
-                                                      </div>--> <!-- /control-group -->
-                                                    <div class="control-group">
-
-                                                        <div class="controls">
-                                                            <p>By clicking 'Post Topic', you are indicating that you have read and agree to the<a href="#"> Terms & Conditions</a> and <a href="#">Privacy Policy</a> 
-                                                                </br>
-                                                                <strong>Your Topic will be reviewed by staff .</strong></p>
-                                                        </div>	
-                                                    </div>
-
 
                                                     <div class="form-actions">
-                                                        <input type="submit" class="btn btn-primary btn-large" value="Post Topic Now" />
+                                                        <input type="submit" class="btn btn-primary btn-large" value="Confirm" />
                                                     </div> <!-- /form-actions -->
                                                 </fieldset>
                                             </form>
@@ -332,34 +260,20 @@
                 <div class="container">
 
                     <div class="row">
+                        <div class="row">
                         <div class="span3">
                             <h4>
-                                About Free Admin Template
-                            </h4>
+                                About Work To Worker</h4>
                             <ul>
-                                <li><a href="javascript:;">EGrappler.com</a></li>
-                                <li><a href="javascript:;">Web Development Resources</a></li>
-                                <li><a href="javascript:;">Responsive HTML5 Portfolio Templates</a></li>
-                                <li><a href="javascript:;">Free Resources and Scripts</a></li>
+                                <li><a href="javascript:;">Web Development Application</a></li>
+                                <li><a href="javascript:;">Responsive Web </a></li>
+                                <li><a href="javascript:;">Project</a></li>
                             </ul>
                         </div>
                         <!-- /span3 -->
                         <div class="span3">
                             <h4>
-                                Support
-                            </h4>
-                            <ul>
-                                <li><a href="javascript:;">Frequently Asked Questions</a></li>
-                                <li><a href="javascript:;">Ask a Question</a></li>
-                                <li><a href="javascript:;">Video Tutorial</a></li>
-                                <li><a href="javascript:;">Feedback</a></li>
-                            </ul>
-                        </div>
-                        <!-- /span3 -->
-                        <div class="span3">
-                            <h4>
-                                Something Legal
-                            </h4>
+                                 Legal</h4>
                             <ul>
                                 <li><a href="javascript:;">Read License</a></li>
                                 <li><a href="javascript:;">Terms of Use</a></li>
@@ -367,17 +281,6 @@
                             </ul>
                         </div>
                         <!-- /span3 -->
-                        <div class="span3">
-                            <h4>
-                                Open Source jQuery Plugins
-                            </h4>
-                            <ul>
-                                <li><a href="http://www.egrappler.com">Open Source jQuery Plugins</a></li>
-                                <li><a href="http://www.egrappler.com;">HTML5 Responsive Tempaltes</a></li>
-                                <li><a href="http://www.egrappler.com;">Free Contact Form Plugin</a></li>
-                                <li><a href="http://www.egrappler.com;">Flat UI PSD</a></li>
-                            </ul>
-                        </div>
                         <!-- /span3 -->
                     </div> <!-- /row -->
 

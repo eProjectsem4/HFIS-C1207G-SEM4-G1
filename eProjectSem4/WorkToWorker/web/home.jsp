@@ -6,6 +6,7 @@
 
 <%@page import="wtw.entities.Account"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="s" uri="/struts-tags" %>
 <% Account accLog = (Account) request.getSession().getAttribute("accLog");
     if (accLog == null) {
         response.sendRedirect("index.jsp");
@@ -17,7 +18,7 @@
     <head>
         <meta charset="utf-8">
         <title>Work to Worker</title>
-
+<link rel="icon" type="image/png" href="img/WTW_logo.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">    
 
@@ -51,30 +52,18 @@
                         <ul class="nav pull-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-cog"></i>Account<b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="javascript:;">Settings</a></li>
-                                    <li><a href="javascript:;">Help</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="icon-user"></i> 
-                                    <s:if test="%{#session.accLog != null}">
+                                   <s:if test="%{#session.accLog != null}">
                                         <s:property value="#session.accLog.getFullname()"/>
                                     </s:if>
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:;">Profile</a></li>
+                                    <li><a href="Profile?id=${sessionScope.accLog.id}">Profile</a></li>
                                     <li><a href="logoutAction">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
-                        <form class="navbar-search pull-right">
-                            <input type="text" class="search-query" placeholder="Search">
-                        </form>
                     </div>
                     <!--/.nav-collapse -->
                 </div>
@@ -125,9 +114,8 @@
                                 </div> <!-- /widget-header -->
 
                                 <div class="widget-content">
-                                    <%
-                                        if (accLog.getRole().equals("Customer")) {
-                                    %>
+                                    <s:if test="%{#session.accLog != null && #session.accLog.role == 'Customer'}">
+                                    
                                     <div class="pricing-plans plans-3">
 
                                         <div class="plan-container">
@@ -219,10 +207,8 @@
                                         </div> <!-- /plan-container -->                                    
 
                                     </div> <!-- /pricing-plans -->
-                                    <%
-                                        }
-                                        if (accLog.getRole().equals("Worker")) {
-                                    %>
+                                    </s:if>
+                                    <s:if test="%{#session.accLog != null && #session.accLog.role == 'Worker'}">
                                     <div class="pricing-plans plans-2">
                                         <div class="plan-container">
                                             <div class="plan">
@@ -253,7 +239,7 @@
                                             </div> <!-- /plan -->
                                         </div>
                                     </div>
-<div class="pricing-plans plans-2">
+                                    <div class="pricing-plans plans-2">
                                     <div class="plan-container">
                                         <div class="plan">
                                             <div class="plan-header">
@@ -283,9 +269,7 @@
                                         </div> <!-- /plan -->
                                     </div>
      </div>
-                                    <%
-                                        }
-                                    %>
+                                    </s:if>
                                 </div> <!-- /widget-content -->
 
                             </div> <!-- /widget -->					
@@ -312,44 +296,21 @@
                     <div class="row">
                         <div class="span3">
                             <h4>
-                                About Free Admin Template</h4>
+                                About Work To Worker</h4>
                             <ul>
-                                <li><a href="javascript:;">EGrappler.com</a></li>
-                                <li><a href="javascript:;">Web Development Resources</a></li>
-                                <li><a href="javascript:;">Responsive HTML5 Portfolio Templates</a></li>
-                                <li><a href="javascript:;">Free Resources and Scripts</a></li>
+                                <li><a href="javascript:;">Web Development Application</a></li>
+                                <li><a href="javascript:;">Responsive Web </a></li>
+                                <li><a href="javascript:;">Project</a></li>
                             </ul>
                         </div>
                         <!-- /span3 -->
                         <div class="span3">
                             <h4>
-                                Support</h4>
-                            <ul>
-                                <li><a href="javascript:;">Frequently Asked Questions</a></li>
-                                <li><a href="javascript:;">Ask a Question</a></li>
-                                <li><a href="javascript:;">Video Tutorial</a></li>
-                                <li><a href="javascript:;">Feedback</a></li>
-                            </ul>
-                        </div>
-                        <!-- /span3 -->
-                        <div class="span3">
-                            <h4>
-                                Something Legal</h4>
+                                 Legal</h4>
                             <ul>
                                 <li><a href="javascript:;">Read License</a></li>
                                 <li><a href="javascript:;">Terms of Use</a></li>
                                 <li><a href="javascript:;">Privacy Policy</a></li>
-                            </ul>
-                        </div>
-                        <!-- /span3 -->
-                        <div class="span3">
-                            <h4>
-                                Open Source jQuery Plugins</h4>
-                            <ul>
-                                <li><a href="http://www.egrappler.com">Open Source jQuery Plugins</a></li>
-                                <li><a href="http://www.egrappler.com;">HTML5 Responsive Tempaltes</a></li>
-                                <li><a href="http://www.egrappler.com;">Free Contact Form Plugin</a></li>
-                                <li><a href="http://www.egrappler.com;">Flat UI PSD</a></li>
                             </ul>
                         </div>
                         <!-- /span3 -->

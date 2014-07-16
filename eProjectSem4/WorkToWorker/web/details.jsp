@@ -8,17 +8,13 @@
 <%@page import="wtw.entities.Account"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags" %>
-<%
-    Account accLog = (Account) request.getSession().getAttribute("accLog");
-    Project project = (Project) request.getSession().getAttribute("project");
-%>
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
         <meta charset="utf-8">
         <title>Work To Worker</title>
-
+<link rel="icon" type="image/png" href="img/WTW_logo.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">    
 
@@ -51,15 +47,6 @@
                         <ul class="nav pull-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-cog"></i>Account<b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="javascript:;">Settings</a></li>
-                                    <li><a href="javascript:;">Help</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="icon-user"></i> 
                                     <s:if test="%{#session.accLog != null}">
                                         <s:property value="#session.accLog.getFullname()"/>
@@ -67,14 +54,12 @@
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:;">Profile</a></li>
+                                    <li><a href="Profile?id=${sessionScope.accLog.id}">Profile</a></li>
                                     <li><a href="logoutAction">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
-                        <form class="navbar-search pull-right">
-                            <input type="text" class="search-query" placeholder="Search">
-                        </form>
+
                     </div>
                     <!--/.nav-collapse -->
                 </div>
@@ -87,8 +72,8 @@
             <div class="subnavbar-inner">
                 <div class="container">
                     <ul class="mainnav">
-                        <li class="active"><a href="home.jsp"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
-                        <li class="dropdown">
+                        <li><a href="home.jsp"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
+                        <li class="dropdown active">
                             <a href="index.html" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i><span>My Project</span> </a>
                             <ul class="dropdown-menu">
                                 <li><a href="createproject.jsp">Post Project</a></li>
@@ -125,19 +110,20 @@
                                     <div class="widget-content">
 
                                         <div id="big_stats" class="cf">
-                                            <div class="stat"><i class=""> Price</i> <span class="value"><s:property value="project.price"/></span> </div>
+                                            <div class="stat"><i class=""> Price</i> <span class="value"><s:property value="project.price"/>$</span> </div>
                                             <!-- .stat -->
                                             <div class="stat"><i class=""> Start Date</i> <span class="value"><s:property value="project.startDate"/></span> </div>
                                             <!-- .stat -->
+                                            <div class="stat"><i class=""> End Date</i> <span class="value"><s:property value="project.endDate"/></span> </div>
+                                            <!-- .stat -->
                                             <div class="stat"><i class=""> Status</i> <span class="value"><s:property value="project.status"/></span> </div>
                                             <!-- .stat -->
-                                            <%
-                                                if (project.getIdWorker() != null) {
-                                                    out.print("<div class='stat'><i> Worker Designated</i> <span class='value'><a href='Profile?id=" + project.getIdWorker().getId() + "'>" + project.getIdWorker().getFullname() + "</a></span> </div>");
-                                                } else {
-                                                    out.print("<div class='stat'><i> Worker Designated</i> <span class='value'>None</span></div>");
-                                                }
-                                            %>
+                                            <s:if test="%{#session.project.idWorker != null}">
+                                                <div class='stat'><i> Worker Designated</i> <span class='value'><a href='Profile?id=${sessionScope.project.getIdWorker().getId()}'> ${sessionScope.project.getIdWorker().getFullname()} </a></span> </div>
+                                            </s:if>
+                                            <s:else>
+                                                <div class='stat'><i> Worker Designated</i> <span class='value'>None</span></div>
+                                            </s:else>
                                             <!-- .stat -->
 
                                         </div>
@@ -149,10 +135,11 @@
                                         <h6 class="bigstats"><section style="color: blue"><s:property value="project.nameSkills"/></section></h6>
 
                                         <s:if test="%{project.attFile != null}">
-                                        <div class="control-group" >
+                                            <div class="control-group" style="margin: 10px;">
                                             <div class="controls" id="msg-errors">
                                                 <div class="alert alert-info">
-                                                    <a href="<s:property value="project.attFile"/>">File Att</a>
+                                                    <i class="icon-large icon-paper-clip"></i>&nbsp;
+                                                        <a href="<s:property value="project.attFile"/>"/>File Att</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -164,7 +151,7 @@
                                                     <div id="myModal" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: block">
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                            <h3 id="myModalLabel">Some Error , you need to know</h3>
+                                                            <h3 id="myModalLabel" style="color: red">Notification</h3>
                                                         </div>
                                                         <div class="modal-body">
                                                             <s:iterator value="messError">
@@ -181,23 +168,20 @@
                                                 </div> <!-- /controls -->	
                                             </div>
                                         </s:if>
-
-                                        <%
-                                            if (accLog.getRole().equals("Worker") && project.getStatus().equals("Started")) {
-                                                out.print("<p class='title_stats'>Action</p>");
-                                                out.print("<h6 class='bigstats'>");
-                                                out.print("<form action='orderAction'><input type='submit' value='Order'></form>");
-                                            }
-                                            if (accLog.getId() == project.getIdCustomer().getId() && !project.getStatus().equals("Done")) {
-                                                out.print("<p class='title_stats'>Action</p>");
-                                                out.print("<h6 class='bigstats'>");
-                                                out.print("<form action='doneProjectAction'><input type='submit' value='Done'></form>");
-                                            }
-                                            if (accLog.getId() == project.getIdCustomer().getId() && project.getStatus().equals("Started")) {
-                                                out.print("<form action='showOrderAction'><input type='submit' value='Show Order'></form>");
-                                                out.print("</h6>");
-                                            }
-                                        %>
+                                        <s:if test="%{#session.accLog.role == 'Worker' && #session.project.status == 'Started'}">
+                                            <p class='title_stats'>Action</p>
+                                            <h6 class='bigstats'>
+                                            <form action='orderAction'><input type='submit' value='Order'></form>
+                                        </s:if>
+                                        <s:if test="%{#session.accLog.id == #session.project.idCustomer.id && #session.project.status != 'Done'}">
+                                        <p class='title_stats'>Action</p>
+                                        <h6 class='bigstats'>
+                                            <form action='doneProjectAction'><input type='submit' value='Done'></form>
+                                        </s:if> 
+                                        <s:if test="%{#session.accLog.id == #session.project.idCustomer.id && #session.project.status == 'Started'}">
+                                            <form action='showOrderAction'><input type='submit' value='Show Order'></form>
+                                            </h6>
+                                        </s:if>
 
 
                                     </div>
@@ -234,48 +218,27 @@
         <div class="container">
 
             <div class="row">
-                <div class="span3">
-                    <h4>
-                        About Free Admin Template</h4>
-                    <ul>
-                        <li><a href="javascript:;">EGrappler.com</a></li>
-                        <li><a href="javascript:;">Web Development Resources</a></li>
-                        <li><a href="javascript:;">Responsive HTML5 Portfolio Templates</a></li>
-                        <li><a href="javascript:;">Free Resources and Scripts</a></li>
-                    </ul>
-                </div>
-                <!-- /span3 -->
-                <div class="span3">
-                    <h4>
-                        Support</h4>
-                    <ul>
-                        <li><a href="javascript:;">Frequently Asked Questions</a></li>
-                        <li><a href="javascript:;">Ask a Question</a></li>
-                        <li><a href="javascript:;">Video Tutorial</a></li>
-                        <li><a href="javascript:;">Feedback</a></li>
-                    </ul>
-                </div>
-                <!-- /span3 -->
-                <div class="span3">
-                    <h4>
-                        Something Legal</h4>
-                    <ul>
-                        <li><a href="javascript:;">Read License</a></li>
-                        <li><a href="javascript:;">Terms of Use</a></li>
-                        <li><a href="javascript:;">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <!-- /span3 -->
-                <div class="span3">
-                    <h4>
-                        Open Source jQuery Plugins</h4>
-                    <ul>
-                        <li><a href="http://www.egrappler.com">Open Source jQuery Plugins</a></li>
-                        <li><a href="http://www.egrappler.com;">HTML5 Responsive Tempaltes</a></li>
-                        <li><a href="http://www.egrappler.com;">Free Contact Form Plugin</a></li>
-                        <li><a href="http://www.egrappler.com;">Flat UI PSD</a></li>
-                    </ul>
-                </div>
+                <div class="row">
+                        <div class="span3">
+                            <h4>
+                                About Work To Worker</h4>
+                            <ul>
+                                <li><a href="javascript:;">Web Development Application</a></li>
+                                <li><a href="javascript:;">Responsive Web </a></li>
+                                <li><a href="javascript:;">Project</a></li>
+                            </ul>
+                        </div>
+                        <!-- /span3 -->
+                        <div class="span3">
+                            <h4>
+                                 Legal</h4>
+                            <ul>
+                                <li><a href="javascript:;">Read License</a></li>
+                                <li><a href="javascript:;">Terms of Use</a></li>
+                                <li><a href="javascript:;">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                        <!-- /span3 -->
                 <!-- /span3 -->
             </div> <!-- /row -->
 

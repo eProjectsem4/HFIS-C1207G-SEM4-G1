@@ -13,7 +13,7 @@
     <head>
         <meta charset="utf-8">
         <title>Work to Worker</title>
-
+<link rel="icon" type="image/png" href="img/WTW_logo.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">    
 
@@ -32,6 +32,11 @@
         <!--[if lt IE 9]>
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
+        <style>
+             td > a{
+                color: #000;
+            }
+        </style>
     </head>
 
     <body>
@@ -45,15 +50,6 @@
                         <ul class="nav pull-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-cog"></i>Account<b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="javascript:;">Settings</a></li>
-                                    <li><a href="javascript:;">Help</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="icon-user"></i> 
                                     <s:if test="%{#session.accLog != null}">
                                         <s:property value="#session.accLog.getFullname()"/>
@@ -61,14 +57,11 @@
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="javascript:;">Profile</a></li>
+                                    <li><a href="Profile?id=${sessionScope.accLog.id}">Profile</a></li>
                                     <li><a href="logoutAction">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
-                        <form class="navbar-search pull-right">
-                            <input type="text" class="search-query" placeholder="Search">
-                        </form>
                     </div>
                     <!--/.nav-collapse -->
                 </div>
@@ -81,7 +74,7 @@
             <div class="subnavbar-inner">
                 <div class="container">
                     <ul class="mainnav">
-                        <li class="active"><a href="home.jsp"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
+                        <li><a href="home.jsp"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
                         <li class="dropdown">
                             <a href="index.html" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-list-alt"></i><span>My Project</span> </a>
                             <ul class="dropdown-menu">
@@ -89,7 +82,7 @@
                                 <li><a href="allProjectAction">List Project</a></li>
                             </ul>
                         </li>
-                        <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
+                        <li class="active"><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
                         <li><a href="barchart"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
                         <li><a href="#"><i class="icon-comment"></i><span>Help</span> </a> </li>
                     </ul>
@@ -139,14 +132,14 @@
 
                                     <display:table id="projectTable" name="listTopic" pagesize="10" requestURI="" class="table table-striped ">
 
-                                        <td><display:column href="showTopicAction?id=${projectTable.id}" property="title" title="Thread" sortable="true"/></td>
-                                        <td><display:column href="Profile?id=${projectTable.idAccount.id}" property="idAccount.fullname" title="Name" sortable="true"/></td> 
-                                        <td><display:column property="postDate" title="Date" format="{0,date,dd-MM-yyyy}" sortable="true"/></td>
+                                        <td><display:column title="Thread" ><a href="showTopicAction?id=${projectTable.id}">${projectTable.title}</a></display:column></td>
+                                        <td><display:column><a href="Profile?id=${projectTable.idAccount.id}">${projectTable.idAccount.fullname}</a></display:column></td> 
+                                        <td><display:column property="postDate" title="" format="{0,date,dd-MM-yyyy}"/></td>
 
-                                        <display:setProperty name="paging.banner.no_items_found" value='<span class="pagebanner">No {0} found.</span>' />
-                                        <display:setProperty name="paging.banner.one_item_found" value='<span class="pagebanner">One {0} found.</span>' />
-                                        <display:setProperty name="paging.banner.all_items_found" value='<span class="pagebanner">{0} {1} found, displaying all {2}.</span>' />
-                                        <display:setProperty name="paging.banner.some_items_found" value='<span class="pagebanner">{0} {1} found, displaying {2} to {3}.</span>' />                                            
+                                        <display:setProperty name="paging.banner.no_items_found" value='<span class="pagebanner"></span>' />
+                                        <display:setProperty name="paging.banner.one_item_found" value='<span class="pagebanner"></span>' />
+                                        <display:setProperty name="paging.banner.all_items_found" value='<span class="pagebanner"></span>' />
+                                        <display:setProperty name="paging.banner.some_items_found" value='<span class="pagebanner"></span>' />                                            
 
                                         <display:setProperty name="paging.banner.first" value='<div class="pagination"><ul><li class="prev" disabled><a href="{1}" class="next" title="first">First</a></li><li class="prev"><a href="{2}" class="next" title="previous">Previous</a></li>{0}<li><a href="{3}" class="next" title="next">Next</a></li><li class="next"><a href="{4}" class="next" title="lest">Last</a></li></ul></div>'/>
                                         <display:setProperty name="paging.banner.last" value='<div class="pagination"><ul><li class="prev"><a href="{1}" class="next" title="first">First</a></li><li class="prev"><a href="{2}" class="next" title="previous">Previous</a></li>{0}<li class="next disabled"><a href="{3}" class="next" title="next">Next</a></li><li class="next disabled"><a href="{4}" class="next" title="lest">Last</a></li></ul></div>'/>
@@ -201,31 +194,20 @@
                 <div class="container">
 
                     <div class="row">
+                        <div class="row">
                         <div class="span3">
                             <h4>
-                                About Free Admin Template</h4>
+                                About Work To Worker</h4>
                             <ul>
-                                <li><a href="javascript:;">EGrappler.com</a></li>
-                                <li><a href="javascript:;">Web Development Resources</a></li>
-                                <li><a href="javascript:;">Responsive HTML5 Portfolio Templates</a></li>
-                                <li><a href="javascript:;">Free Resources and Scripts</a></li>
+                                <li><a href="javascript:;">Web Development Application</a></li>
+                                <li><a href="javascript:;">Responsive Web </a></li>
+                                <li><a href="javascript:;">Project</a></li>
                             </ul>
                         </div>
                         <!-- /span3 -->
                         <div class="span3">
                             <h4>
-                                Support</h4>
-                            <ul>
-                                <li><a href="javascript:;">Frequently Asked Questions</a></li>
-                                <li><a href="javascript:;">Ask a Question</a></li>
-                                <li><a href="javascript:;">Video Tutorial</a></li>
-                                <li><a href="javascript:;">Feedback</a></li>
-                            </ul>
-                        </div>
-                        <!-- /span3 -->
-                        <div class="span3">
-                            <h4>
-                                Something Legal</h4>
+                                 Legal</h4>
                             <ul>
                                 <li><a href="javascript:;">Read License</a></li>
                                 <li><a href="javascript:;">Terms of Use</a></li>
@@ -233,16 +215,6 @@
                             </ul>
                         </div>
                         <!-- /span3 -->
-                        <div class="span3">
-                            <h4>
-                                Open Source jQuery Plugins</h4>
-                            <ul>
-                                <li><a href="http://www.egrappler.com">Open Source jQuery Plugins</a></li>
-                                <li><a href="http://www.egrappler.com;">HTML5 Responsive Tempaltes</a></li>
-                                <li><a href="http://www.egrappler.com;">Free Contact Form Plugin</a></li>
-                                <li><a href="http://www.egrappler.com;">Flat UI PSD</a></li>
-                            </ul>
-                        </div>
                         <!-- /span3 -->
                     </div> <!-- /row -->
 

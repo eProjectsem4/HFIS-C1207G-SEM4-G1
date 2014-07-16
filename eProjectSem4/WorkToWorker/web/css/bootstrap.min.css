@@ -40,7 +40,7 @@ img {
 	-ms-interpolation-mode: bicubic;
 	vertical-align: middle;
 }
-button, input, select, textarea {
+button, input,  textarea {
 	margin: 0;
 	font-size: 100%;
 	vertical-align: middle;
@@ -532,12 +532,12 @@ legend small {
 	font-size: 13.5px;
 	color: #999999;
 }
-label, input, button, select, textarea {
+label, input, button,  textarea {
 	font-size: 13px;
 	font-weight: normal;
 	line-height: 18px;
 }
-input, button, select, textarea {
+input, button, textarea {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 label {
@@ -545,7 +545,7 @@ label {
 	margin-bottom: 5px;
 	color: #333333;
 }
-input, textarea, select, .uneditable-input {
+input, textarea, .uneditable-input {
 	display: inline-block;
 	width: 210px;
 	height: 18px;
@@ -563,7 +563,7 @@ input, textarea, select, .uneditable-input {
 	width: auto;
 	height: auto;
 }
-label input, label textarea, label select {
+label input, label textarea {
 	display: block;
 }
 input[type="image"], input[type="checkbox"], input[type="radio"] {
@@ -597,7 +597,7 @@ input[type="button"], input[type="reset"], input[type="submit"] {
 	width: auto;
 	height: auto;
 }
-select, input[type="file"] {
+ input[type="file"] {
 	height: 28px;
 *margin-top:4px;
 	line-height: 28px;
@@ -605,13 +605,7 @@ select, input[type="file"] {
 input[type="file"] {
 	line-height: 18px \9;
 }
-select {
-	width: 220px;
-	background-color: #ffffff;
-}
-select[multiple], select[size] {
-	height: auto;
-}
+
 input[type="image"] {
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
@@ -843,7 +837,7 @@ color:#999999;
 	padding-left: 5px;
 }
 .input-prepend, .input-append {
-	margin-bottom: 5px;
+	/* margin-bottom: 5px; */
 }
 .input-prepend input, .input-append input, .input-prepend select, .input-append select, .input-prepend .uneditable-input, .input-append .uneditable-input {
 *margin-left:0;
@@ -950,7 +944,7 @@ color:#999999;
 	margin-right: 3px;
 }
 .control-group {
-	margin: 9px;
+	margin-bottom: 9px;
 }
 legend+.control-group {
 	margin-top: 18px;

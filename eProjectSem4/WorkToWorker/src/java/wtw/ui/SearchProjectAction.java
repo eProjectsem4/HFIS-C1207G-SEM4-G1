@@ -24,16 +24,54 @@ public class SearchProjectAction extends ActionSupport{
     ProjectManager projectManager = lookupProjectManagerBean();
     
     
-    private String keyword;
+    private String name;
+    private String price;
+    private String from;
+    private String skills;
+    private String category;
     private List<Project> listProject;
 
-    public String getKeyword() {
-        return keyword;
+    public String getName() {
+        return name;
     }
 
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
+    public void setName(String name) {
+        this.name = name;
     }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    
 
     public List<Project> getListProject() {
         return listProject;
@@ -45,7 +83,7 @@ public class SearchProjectAction extends ActionSupport{
 
     @Override
     public String execute() throws Exception {
-        listProject = projectManager.searchProject(keyword);
+        listProject = projectManager.searchProject(name, price, skills, category);
         return "success";
     }
     

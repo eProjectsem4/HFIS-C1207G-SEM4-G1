@@ -8,6 +8,7 @@ package wtw.ui;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.io.File;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +21,7 @@ import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
+import wtw.biz.BalanceManager;
 import wtw.biz.ProjectManager;
 import wtw.entities.Account;
 import wtw.entities.Project;
@@ -29,6 +31,7 @@ import wtw.entities.Project;
  * @author Khanh
  */
 public class CreateProjectAction extends ActionSupport implements ServletRequestAware {
+    BalanceManager balanceManager = lookupBalanceManagerBean();
 
     ProjectManager projectManager = lookupProjectManagerBean();
 
@@ -39,6 +42,8 @@ public class CreateProjectAction extends ActionSupport implements ServletRequest
     private String price;
     private File fileUpload;
     private String fileUploadFileName;
+    private String from;
+    private String to;
 
     private HttpServletRequest servletRequest;
 
@@ -116,11 +121,33 @@ public class CreateProjectAction extends ActionSupport implements ServletRequest
         this.fileUploadFileName = fileUploadFileName;
     }
 
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+    
+    
+
     @Override
     public String execute() throws Exception {
 
         Account accLog = (Account) ActionContext.getContext().getSession().get("accLog");
         messCreate = new ArrayList<String>();
+        boolean checkBalance = balanceManager.checkBalance(accLog);
+        if(!checkBalance) {
+            messCreate.add("You not enough money in account to create project ");
+        }
         if (!wtw.validate.Validator.checkStringEmpty(new String[]{name, category, skills, description, price})) {
             messCreate.add("You must insert all field");
         }
@@ -144,6 +171,8 @@ public class CreateProjectAction extends ActionSupport implements ServletRequest
         if (messCreate.size() > 0) {
             return "error";
         }
+        
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
         Project p = new Project();
         p.setName(name);
@@ -152,7 +181,8 @@ public class CreateProjectAction extends ActionSupport implements ServletRequest
         p.setNameSkills(skills);
         p.setDescriptions(description);
         p.setPrice(Integer.parseInt(price));
-        p.setStartDate(new Date());
+        p.setStartDate(simpleDateFormat.parse(from));
+        p.setEndDate(simpleDateFormat.parse(to));
         p.setStatus("Started");
 
         if (fileUpload != null) {
@@ -164,6 +194,7 @@ public class CreateProjectAction extends ActionSupport implements ServletRequest
         }
 
         projectManager.createProject(p);
+        balanceManager.sold(accLog, 10);
         messCreate = new ArrayList<String>();
         messCreate.add("Create success !");
         return "success";
@@ -179,4 +210,15 @@ public class CreateProjectAction extends ActionSupport implements ServletRequest
         }
     }
 
+    private BalanceManager lookupBalanceManagerBean() {
+        try {
+            Context c = new InitialContext();
+            return (BalanceManager) c.lookup("java:global/WorkToWorker/BalanceManager!wtw.biz.BalanceManager");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    
 }

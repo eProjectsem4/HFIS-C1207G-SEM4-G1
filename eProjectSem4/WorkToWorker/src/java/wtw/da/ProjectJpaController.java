@@ -61,31 +61,31 @@ public class ProjectJpaController implements Serializable {
     }
 
     public List<Project> getAll() {
-        String queryString = "SELECT p FROM Project p";
+        String queryString = "SELECT p FROM Project p where p.status != 'Done' Order By p.startDate DESC";
         TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);
         return query.getResultList();
     }
 
-    public List<Project> findBykeyword(String key) {
-        String s = "SELECT p FROM Project p WHERE p.category = :category or p.name = :name or p.nameSkills = :nameSkills or p.price = :price or p.startDate = :startDate or p.status = :status";
+    public List<Project> findBykeyword(String name,String price , String skills,String category) {
+        String s = "SELECT p FROM Project p WHERE p.category like :category and p.name like :name and p.nameSkills like :nameSkills and p.price = :price Order By p.startDate DESC";
         TypedQuery<Project> query = getEntityManager().createQuery(s, Project.class);
-        query.setParameter("name", key);
-        query.setParameter("nameSkills", key);
-        query.setParameter("status", key);
-        query.setParameter("category", key);
+        query.setParameter("name","%" + name + "%");
+        query.setParameter("nameSkills", "%" + skills + "%");
+//        query.setParameter("status", "%" + status + "%");
+        query.setParameter("category", "%" + category + "%");
         try {
-            query.setParameter("price", Integer.parseInt(key));
+            query.setParameter("price", Integer.parseInt(price));
         } catch (Exception e) {
             query.setParameter("price", null);
         }
-        try {
-            Date date = new java.sql.Date(2014, 07, 06);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            date = simpleDateFormat.parse(key);
-            query.setParameter("startDate", date);
-        } catch (Exception e) {
-            query.setParameter("startDate", null);
-        }
+//        try {
+//            Date date = new java.sql.Date(2014, 07, 06);
+//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//            date = simpleDateFormat.parse(from);
+//            query.setParameter("startDate", date);
+//        } catch (Exception e) {
+//            query.setParameter("startDate", null);
+//        }
         return query.getResultList();
 
     }
@@ -98,7 +98,7 @@ public class ProjectJpaController implements Serializable {
     }
 
     public List<Project> getByIdCustomer(Account customer) {
-        String queryString = "SELECT p FROM Project p WHERE p.idCustomer = :idCustomer";
+        String queryString = "SELECT p FROM Project p WHERE p.idCustomer = :idCustomer Order By p.startDate DESC";
         TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);
         query.setParameter("idCustomer", customer);
         return query.getResultList();
