@@ -93,10 +93,14 @@
                             <div class="widget">
                                 <div class="widget-header">
                                     <i class="icon-bar-chart"></i>
-                                    <h3>
-                                        Bar Chart</h3>
+                                    <h3>Bar Chart</h3>
                                 </div>
                                 <!-- /widget-header -->
+                                  <form action="#">
+                                        <input type="date" placeholder="StartDate" name="startdate"/>
+                                        <input type="date" placeholder="EndDate" name="enddate"/>
+                                        <input type="submit" class="btn btn-primary btn-large" value="Search"/>
+                                    </form>
                                 <div class="widget-content">
 
                                     <s:url action="chart" id="url"/>
@@ -108,17 +112,19 @@
                             </div>
                             <!-- /widget -->
                         </div>
-                       
+
                     </div>
                     <!-- /span6 -->
+                     <a href="#" class="btn btn-primary btn-large" style="float: right">Export File</a>
                 </div>
                 <!-- /row -->
             </div>
             <!-- /container -->
-        </div>
+        </div>              
         <!-- /main-inner -->
     </div>
     <!-- /main -->
+   
     <div class="extra">
         <div class="extra-inner">
             <div class="container">
@@ -136,7 +142,7 @@
                         <!-- /span3 -->
                         <div class="span3">
                             <h4>
-                                 Legal</h4>
+                                Legal</h4>
                             <ul>
                                 <li><a href="javascript:;">Read License</a></li>
                                 <li><a href="javascript:;">Terms of Use</a></li>
@@ -144,37 +150,37 @@
                             </ul>
                         </div>
                         <!-- /span3 -->
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /extra-inner -->
-    </div>
-    <!-- /extra -->
-    <div class="footer">
-        <div class="footer-inner">
-            <div class="container">
-                <div class="row">
-                    <div class="span12">
-                        &copy; 2013 <a href="http://www.egrappler.com/">Bootstrap Responsive Admin Template</a>.
                     </div>
-                    <!-- /span12 -->
+                    <!-- /row -->
                 </div>
-                <!-- /row -->
+                <!-- /container -->
             </div>
-            <!-- /container -->
+            <!-- /extra-inner -->
         </div>
-        <!-- /footer-inner -->
-    </div>
-    <!-- /footer -->
-    <!-- Le javascript
-================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery-1.7.2.min.js"></script>
-    <script src="js/excanvas.min.js"></script>
-    <script src="js/chart.min.js" type="text/javascript"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/base.js"></script>
+        <!-- /extra -->
+        <div class="footer">
+            <div class="footer-inner">
+                <div class="container">
+                    <div class="row">
+                        <div class="span12">
+                            &copy; 2013 <a href="http://www.egrappler.com/">Bootstrap Responsive Admin Template</a>.
+                        </div>
+                        <!-- /span12 -->
+                    </div>
+                    <!-- /row -->
+                </div>
+                <!-- /container -->
+            </div>
+            <!-- /footer-inner -->
+        </div>
+        <!-- /footer -->
+        <!-- Le javascript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="js/jquery-1.7.2.min.js"></script>
+        <script src="js/excanvas.min.js"></script>
+        <script src="js/chart.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/base.js"></script>
 </body>
 </html>
