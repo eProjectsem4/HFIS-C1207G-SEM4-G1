@@ -97,8 +97,8 @@
                                 </div>
                                 <!-- /widget-header -->
                                   <form action="#">
-                                        <input type="date" placeholder="StartDate" name="startdate"/>
-                                        <input type="date" placeholder="EndDate" name="enddate"/>
+                                      <input type="date" placeholder="StartDate" name="startdate" value="16/7/2014"/>
+                                      <input type="date" placeholder="EndDate" name="enddate" value="16/8/2014"/>
                                         <input type="submit" class="btn btn-primary btn-large" value="Search"/>
                                     </form>
                                 <div class="widget-content">
