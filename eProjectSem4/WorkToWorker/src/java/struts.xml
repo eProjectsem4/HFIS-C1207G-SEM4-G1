@@ -126,25 +126,13 @@
             </result>
         </action>
         
-        <action name="barchart">
+        <action name="barchart" class="wtw.ui.BarchartAction">
             <result name="success">charts.jsp</result>
         </action>
         
     </package>
     <package name="chart" extends="jfreechart-default">
         <action name="chart" class="wtw.ui.GetChartAction">
-            <result name="success" type="chart">
-                <param name="width">480</param>
-                <param name="height">250</param>
-            </result>
-        </action>
-       <action name="linechart" class="wtw.ui.LineChartAction">
-            <result name="success" type="chart">
-                <param name="width">533</param>
-                <param name="height">250</param>
-            </result>
-        </action>
-         <action name="piechart" class="wtw.ui.PieChartAction">
             <result name="success" type="chart">
                 <param name="width">480</param>
                 <param name="height">250</param>

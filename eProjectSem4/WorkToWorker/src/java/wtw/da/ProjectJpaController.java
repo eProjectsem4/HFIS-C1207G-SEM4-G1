@@ -44,21 +44,61 @@ public class ProjectJpaController implements Serializable {
     }
 
     public int getCountProjectInMonth(Date start, Date end) {
-        String queryString = "SELECT p FROM Project p WHERE p.startDate > start and p.startDate < end";
-        TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);
-        query.setParameter("start", start);
-        query.setParameter("end", end);
-        return query.getResultList().size();
+        try {
+            //String queryString = "SELECT p FROM Project p WHERE p.startDate > start and p.startDate < end";
+            String queryString ="SELECT p FROM Project p WHERE p.startDate between :start and :end";
+            TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);
+            query.setParameter("start", start);
+            query.setParameter("end", end);
+            return query.getResultList().size();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
+    public List<Project> getProjectInMonth(Date start, Date end){
+     try {
+            
+            String queryString ="SELECT p FROM Project p WHERE p.startDate between :start and :end";
+            TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);
+            query.setParameter("start", start);
+            query.setParameter("end", end);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public int getCountProjectInMonthAndStatus(Date start, Date end, String status) {
+        try {
+            String queryString = "SELECT p FROM Project p WHERE p.startDate between :start and :end and p.status = :status";
+            TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);
+            query.setParameter("start", start);
+            query.setParameter("end", end);
+            query.setParameter("status", status);
+            return query.getResultList().size();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+
     }
 
-    public int getCountProjectInMonthAndStatus(Date start, Date end, String status) {
-        String queryString = "SELECT p FROM Project p WHERE p.startDate > :start and p.startDate < :end and p.status = :status";
-        TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);
-        query.setParameter("start", start);
-        query.setParameter("end", end);
-        query.setParameter("status", status);
-        return query.getResultList().size();
+    public int getCountProjectInMonthAndCategory(Date start, Date end, String category) {
+        try {
+            String queryString = "SELECT p FROM Project p WHERE p.startDate between :start and :end and p.category = :category";
+            TypedQuery<Project> query = getEntityManager().createQuery(queryString, Project.class);
+            query.setParameter("start", start);
+            query.setParameter("end", end);
+            query.setParameter("category", category);
+            return query.getResultList().size();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
+
 
     public List<Project> getAll() {
         String queryString = "SELECT p FROM Project p where p.status != 'Done' Order By p.startDate DESC";

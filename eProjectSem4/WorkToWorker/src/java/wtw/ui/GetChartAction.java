@@ -5,6 +5,8 @@
  */
 package wtw.ui;
 
+import static com.opensymphony.xwork2.Action.SUCCESS;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,6 +29,7 @@ import wtw.biz.ProjectManager;
 public class GetChartAction extends ActionSupport {
 
     ProjectManager projectManager = lookupProjectManagerBean();
+
     private float all;
     private float mobile;
     private float web;
@@ -34,22 +37,40 @@ public class GetChartAction extends ActionSupport {
     private float data;
     private float other;
     private float software;
+    private String startdate;
+    private String enddate;
     private JFreeChart chart;
 
     @Override
     public String execute() throws Exception {
-        String datevalue = "2014-07-10";
-        Date date;
-        DateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
-        date = (Date) formater.parse(datevalue);
-
-        all = projectManager.getCountProjectbyStartDate(date);
-        mobile = projectManager.getCountProjectbyStartDateAndCategory(date, " Mobile");
-        web = projectManager.getCountProjectbyStartDateAndCategory(date, " Website");
-        software = projectManager.getCountProjectbyStartDateAndCategory(date, " Software");
-        design = projectManager.getCountProjectbyStartDateAndCategory(date, " Design");
-        data = projectManager.getCountProjectbyStartDateAndCategory(date, " Data Entry");
-        other = projectManager.getCountProjectbyStartDateAndCategory(date, " Other");
+        Object start = ActionContext.getContext().getSession().get("start");
+        Object end = ActionContext.getContext().getSession().get("end");
+        if (start != null && end != null) {
+            startdate = (String) start;
+            enddate = (String) end;
+        }
+        if (start == null || end == null) {
+            all = 6;
+            mobile = 1;
+            web = 1;
+            software = 1;
+            design = 1;
+            data = 1;
+            other = 1;
+        } else {
+            Date date2;
+            Date date;
+            DateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+            date = (Date) formater.parse(startdate);
+            date2 = (Date) formater.parse(enddate);
+            all = projectManager.getCountProjectInMonth(date, date2);
+            mobile = projectManager.getCountProjectInMonthAndCategory(date, date2, " Mobile");
+            web = projectManager.getCountProjectInMonthAndCategory(date, date2, " Website");
+            software = projectManager.getCountProjectInMonthAndCategory(date, date2, " Software");
+            design = projectManager.getCountProjectInMonthAndCategory(date, date2, " Design");
+            data = projectManager.getCountProjectInMonthAndCategory(date, date2, " Data Entry");
+            other = projectManager.getCountProjectInMonthAndCategory(date, date2, " Other");
+        }
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
         dataSet.setValue(all, "Population", "Total");
         dataSet.setValue(mobile, "Population", "Mobile");
@@ -69,6 +90,22 @@ public class GetChartAction extends ActionSupport {
         return chart;
     }
 
+    public String getStartdate() {
+        return startdate;
+    }
+
+    public void setStartdate(String startdate) {
+        this.startdate = startdate;
+    }
+
+    public String getEnddate() {
+        return enddate;
+    }
+
+    public void setEnddate(String enddate) {
+        this.enddate = enddate;
+    }
+
     private ProjectManager lookupProjectManagerBean() {
         try {
             Context c = new InitialContext();
@@ -78,4 +115,5 @@ public class GetChartAction extends ActionSupport {
             throw new RuntimeException(ne);
         }
     }
+
 }

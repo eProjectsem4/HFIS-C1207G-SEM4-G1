@@ -22,15 +22,39 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="css/datepicker.css" rel="stylesheet" type="text/css"/>
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
               rel="stylesheet">
         <link href="css/font-awesome.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
 
+        <script src="js/jquery-1.7.2.min.js"></script>
+        <script src="js/code.jquery.com_ui_1.10.4_jquery-ui.js" type="text/javascript"></script>
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
+        <script>
+            $(document).ready(function() {
+                $("#startdate").datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    dateFormat: "yy-mm-dd",
+                    onClose: function(selectedDate) {
+                        $("#enddate").datepicker("option", "minDate", selectedDate);
+                    }
+                });
+
+                $("#enddate").datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    dateFormat: "yy-mm-dd",
+                    onClose: function(selectedDate) {
+                        $("#startdate").datepicker("option", "maxDate", selectedDate);
+                    }
+                });
+            })
+        </script>
     </head>
     <body>
         <div class="navbar navbar-fixed-top">
@@ -77,7 +101,7 @@
                         </li>
                         <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
                         <li class="active"><a href="barchart"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
-                         <li><a href="credit.jsp"><i class="icon-comment"></i><span>Credit Card</span> </a> </li>
+                        <li><a href="credit.jsp"><i class="icon-comment"></i><span>Credit Card</span> </a> </li>
                     </ul>
                 </div>
                 <!-- /container -->
@@ -96,26 +120,56 @@
                                     <h3>Bar Chart</h3>
                                 </div>
                                 <!-- /widget-header -->
-                                  <form action="#">
-                                      <input type="date" placeholder="StartDate" name="startdate" value="16/7/2014"/>
-                                      <input type="date" placeholder="EndDate" name="enddate" value="16/8/2014"/>
-                                        <input type="submit" class="btn btn-primary btn-large" value="Search"/>
-                                    </form>
-                                <div class="widget-content">
-
-                                    <s:url action="chart" id="url"/>
-                                    <img src="<s:property value="url"/>"/>
-
-                                    <!-- /bar-chart -->
-                                </div>
+                                <form action="barchart" style="display: block">
+                                    <input type="text" placeholder="StartDate" name="startdate" id="startdate" style="width: 110px;margin-left: 45px"/>
+                                    <input type="text" placeholder="EndDate" name="enddate" id="enddate" style="width: 110px;"/>
+                                    <input type="submit" class="btn btn-primary btn-large" value="Search" style="margin-bottom: 9px;"/>
+                                    <div class="widget-content">
+                                        <s:url action="chart" id="url"/>
+                                        <img src="<s:property value="url"/>"/>
+                                        <!-- /bar-chart -->
+                                    </div>
+                                </form>
                                 <!-- /widget-content -->
                             </div>
                             <!-- /widget -->
                         </div>
-
+                        <div class="span6">
+                            <h3><s:property value="titleDate"/></h3>
+                            <h4><s:property value="total"/></h4>
+                            <h4><s:property value="mobileS"/><s:property value="webS"/></h4>
+                            <h4><s:property value="softS"/><s:property value="deS"/></h4>
+                            <h4><s:property value="daS"/><s:property value="otS"/></h4>
+                            <p style="margin-top: 17px;"><s:property value="listTitle"/></p>
+                            <table dir="ltr" width="500" border="1" 
+                                   summary="purpose/structure for speech output">
+                                <colgroup width="50%" />
+                                <colgroup id="colgroup" class="colgroup" align="center" 
+                                          valign="middle" title="title" width="1*" 
+                                          span="2" style="background:#ddd;" />
+                                <thead>
+                                    <tr>
+                                        <th scope="col"><s:property value="colum1"/></th>
+                                        <th scope="col"><s:property value="colum2"/></th>
+                                        <th scope="col"><s:property value="colum3"/></th>
+                                        <th scope="col"><s:property value="colum4"/></th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <s:iterator value="listProject">
+                                        <tr>
+                                            <td><s:property value="name"/></td>
+                                            <td><s:property value="category"/></td>
+                                            <td><s:property value="price"/></td>
+                                            <td><s:property value="status"/></td>
+                                        </tr>
+                                    </s:iterator>
+                                </tfoot>
+                            </table>
+                        </div>          
                     </div>
                     <!-- /span6 -->
-                     <a href="#" class="btn btn-primary btn-large" style="float: right">Export File</a>
+                    <a  href="${pageContext.request.contextPath}/exportEmployeeDetails.action" class="btn btn-primary btn-large" style="float: right">Export File</a>
                 </div>
                 <!-- /row -->
             </div>
@@ -124,7 +178,7 @@
         <!-- /main-inner -->
     </div>
     <!-- /main -->
-   
+
     <div class="extra">
         <div class="extra-inner">
             <div class="container">
@@ -177,7 +231,6 @@
         <!-- Le javascript
     ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="js/jquery-1.7.2.min.js"></script>
         <script src="js/excanvas.min.js"></script>
         <script src="js/chart.min.js" type="text/javascript"></script>
         <script src="js/bootstrap.js"></script>

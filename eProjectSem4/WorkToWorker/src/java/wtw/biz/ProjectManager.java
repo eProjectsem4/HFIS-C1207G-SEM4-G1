@@ -93,4 +93,11 @@ public class ProjectManager {
     public int getCountProjectbyStartDateAndCategory(Date start, String category) {
         return getController().getProjectbyCategory(start, category);
     }
+        public int getCountProjectInMonthAndCategory(Date start, Date end, String category) {
+        return getController().getCountProjectInMonthAndCategory(start, end, category);
+    }
+
+    public List<Project> getProjectInMonth(Date start, Date end) {
+        return getController().getProjectInMonth(start, end);
+    }
 }
