@@ -96,7 +96,7 @@
                         </li>
                         <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
                         <li><a href="barchart"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
-                        <li><a href="#"><i class="icon-comment"></i><span>Help</span> </a> </li>
+                        <li><a href="credit.jsp"><i class="icon-comment"></i><span>Credit Card</span> </a> </li>
                     </ul>
                 </div>
                 <!-- /container -->
@@ -131,6 +131,7 @@
                             <p><span class="profile-title">Phone</span> : <s:property value="accPro.phone"/></p>
                             <p><span class="profile-title">Experience</span> : <s:property value="accPro.experience"/> Years</p>
                             <p><span class="profile-title">Skills</span> : <s:property value="accPro.skills"/></p>
+                            <p><span class="profile-title">Money in Account</span> : <s:property value="balance"/>$</p>
 
                             <s:if test="%{#session.accLog.getId() == #session.accPro.getId()}">
                                 <form action='editProfileAction'><input type='submit' value='Edit Profile'></form>

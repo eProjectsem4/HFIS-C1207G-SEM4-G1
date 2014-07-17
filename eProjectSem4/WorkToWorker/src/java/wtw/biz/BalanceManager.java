@@ -67,4 +67,10 @@ public class BalanceManager {
         balanceByIdAccount.setMoney(balanceByIdAccount.getMoney() - money);
         getController().edit(balanceByIdAccount);
     }
+    
+    public double getBalance(Account acc){
+        double balance = getController().checkBalance(acc);
+        if(balance == -1) return 0;
+        else return balance;
+    }
 }

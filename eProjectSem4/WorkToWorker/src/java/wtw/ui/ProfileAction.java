@@ -15,6 +15,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import wtw.biz.AccountManager;
+import wtw.biz.BalanceManager;
 import wtw.biz.FeedCustomerManager;
 import wtw.biz.FeedWorkerManager;
 import wtw.biz.RateCustomerManager;
@@ -28,6 +29,7 @@ import wtw.entities.FeedWorker;
  * @author Khanh
  */
 public class ProfileAction extends ActionSupport{
+    BalanceManager balanceManager = lookupBalanceManagerBean();
     RateWorkerManager rateWorkerManager = lookupRateWorkerManagerBean();
     RateCustomerManager rateCustomerManager = lookupRateCustomerManagerBean();
     FeedWorkerManager feedWorkerManager = lookupFeedWorkerManagerBean();
@@ -39,6 +41,7 @@ public class ProfileAction extends ActionSupport{
     private String id;
     private Account accPro;
     private float star;
+    private double balance;
     private List<FeedCustomer> listFeedCustomer;
     private List<FeedWorker> listFeedWorker;
 
@@ -54,10 +57,17 @@ public class ProfileAction extends ActionSupport{
             star = rateWorkerManager.starWorker(accPro);
             listFeedWorker = feedWorkerManager.getFeedWorker(accPro);
         }
+        balance = balanceManager.getBalance(accPro);
         return "success";
     }
-    
-    
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 
     public String getId() {
         return id;
@@ -143,6 +153,16 @@ public class ProfileAction extends ActionSupport{
         try {
             Context c = new InitialContext();
             return (RateWorkerManager) c.lookup("java:global/WorkToWorker/RateWorkerManager!wtw.biz.RateWorkerManager");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private BalanceManager lookupBalanceManagerBean() {
+        try {
+            Context c = new InitialContext();
+            return (BalanceManager) c.lookup("java:global/WorkToWorker/BalanceManager!wtw.biz.BalanceManager");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
