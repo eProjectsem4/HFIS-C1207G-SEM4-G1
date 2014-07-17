@@ -21,7 +21,7 @@ Create table Account(id int Primary Key identity,
 Go
 
 insert into Account values ('khanhnd_b01438@fpt.aptech.ac.vn','e10adc3949ba59abbe56e057f20f883e','Nguyen Duc Khanh','','','Customer','','','')
-
+insert into Account values ('admin@gmail.com','e10adc3949ba59abbe56e057f20f883e','Nguyen Duc Khanh','','','Admin','','','')
 Go
 
 Create table Project(id int Primary key identity,
