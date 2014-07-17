@@ -51,14 +51,22 @@ public class BarchartAction extends ActionSupport {
     private String colum2;
     private String colum3;
     private String colum4;
+
     public BarchartAction() {
     }
 
     @Override
     public String execute() throws Exception {
         session = ActionContext.getContext().getSession();
-        session.put("start", startdate);
-        session.put("end", enddate);
+        if (startdate == null || enddate == null) {
+            if (session != null) {
+                startdate = (String) session.get("start");
+                enddate = (String) session.get("end");
+            }
+        } else {
+            session.put("start", startdate);
+            session.put("end", enddate);
+        }
         try {
             Date date;
             Date date2;
@@ -73,21 +81,21 @@ public class BarchartAction extends ActionSupport {
             int design = projectManager.getCountProjectInMonthAndCategory(date, date2, " Design");
             int data = projectManager.getCountProjectInMonthAndCategory(date, date2, " Data Entry");
             int other = projectManager.getCountProjectInMonthAndCategory(date, date2, " Other");
-            title = "Mobile Project " + mobile + " Website Project "  + web + " SoftWare Project " + software + " Design Project " + design + " Data Project " + data + " Other Project " + other;
+            title = "Mobile Project " + mobile + " Website Project " + web + " SoftWare Project " + software + " Design Project " + design + " Data Project " + data + " Other Project " + other;
             listProject = projectManager.getProjectInMonth(date, date2);
-            titleDate = "Details Report  from " + startdate+ " to " +enddate+ "";
-            total = "Total Project: "+totalProject+"p";
-            listTitle ="Detail Project";
-            mobileS ="Mobile Project :" +mobile+"p - ";
-            webS = "Website Project :" +web+"p";
-            softS = "SoftWare Project :" +software+"p - ";
-            deS = "Design Project :" +design+"p";
-            daS = "Data Project :" +data+"p - ";
-            otS = "Other Project :" +other+"p";
-            colum1 ="Project Name";
-            colum2 ="Category";
-            colum3 ="Price";
-            colum4 ="Status";
+            titleDate = "Details Report  from " + startdate + " to " + enddate + "";
+            total = "Total Project: " + totalProject + "p";
+            listTitle = "Detail Project";
+            mobileS = "Mobile Project :" + mobile + "p - ";
+            webS = "Website Project :" + web + "p";
+            softS = "SoftWare Project :" + software + "p - ";
+            deS = "Design Project :" + design + "p";
+            daS = "Data Project :" + data + "p - ";
+            otS = "Other Project :" + other + "p";
+            colum1 = "Project Name";
+            colum2 = "Category";
+            colum3 = "Price";
+            colum4 = "Status";
         } catch (ParseException ex) {
             Logger.getLogger(BarchartAction.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -245,7 +253,7 @@ public class BarchartAction extends ActionSupport {
     public void setColum4(String colum4) {
         this.colum4 = colum4;
     }
-    
+
     private ProjectManager lookupProjectManagerBean() {
         try {
             Context c = new InitialContext();

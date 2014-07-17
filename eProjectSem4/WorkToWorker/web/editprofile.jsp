@@ -246,7 +246,7 @@
                             </ul>
                         </li>
                         <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
-                        <li><a href="barchart"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
+                        <li><a href="charts.jsp"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
                         <li><a href="credit.jsp"><i class="icon-comment"></i><span>Credit Card</span> </a> </li>
                     </ul>
                 </div>

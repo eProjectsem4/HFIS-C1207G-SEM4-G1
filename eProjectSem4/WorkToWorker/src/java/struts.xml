@@ -128,6 +128,7 @@
         
         <action name="barchart" class="wtw.ui.BarchartAction">
             <result name="success">charts.jsp</result>
+            <result name="error">charterror.jsp</result>
         </action>
         
     </package>
