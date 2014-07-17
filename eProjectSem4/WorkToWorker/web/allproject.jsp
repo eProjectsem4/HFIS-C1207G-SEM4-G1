@@ -24,20 +24,23 @@
         <link href="css/style.css" rel="stylesheet">
         <link href="css/pages/dashboard.css" rel="stylesheet">
         <link href="css/datepicker.css" rel="stylesheet" type="text/css"/>
-        
+        <script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/base.js"></script>
+
         <script src="js/code.jquery.com_jquery-1.10.2.js" type="text/javascript"></script>
         <script src="js/code.jquery.com_ui_1.11.0_jquery-ui.js" type="text/javascript"></script>
 
-       <script src="js/jquery.validate.js"></script>
+        <script src="js/jquery.validate.js"></script>
         <script src="js/additional-methods.js"></script>
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
               <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
             <![endif]-->
         <script>
-            $(document).ready(function(){
+            $(document).ready(function() {
                 $('#searchForm').validate({
-                    rule:{
+                    rule: {
                         price: {
                             number: true,
                         }
@@ -135,7 +138,7 @@
         </script>
     </head>
     <body>
-        
+
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
@@ -151,7 +154,7 @@
                                         <s:property value="#session.accLog.getFullname()"/>
                                     </s:if>
                                     <b class="caret"></b>
-                                    
+
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="Profile?id=${sessionScope.accLog.id}">Profile</a></li>
@@ -184,9 +187,9 @@
                             </ul>
                         </li>
                         <li><a href="forumAction"><i class="icon-facetime-video"></i><span>Forums</span> </a></li>
-                        <s:if test="%{#session.accLog.role == 'Admin'}">
-                        <li><a href="charts.jsp"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
-                        </s:if>
+                                    <s:if test="%{#session.accLog.role == 'Admin'}">
+                            <li><a href="charts.jsp"><i class="icon-bar-chart"></i><span>Reports</span> </a> </li>
+                                    </s:if>
                         <li><a href="credit.jsp"><i class="icon-comment"></i><span>Credit Card</span> </a> </li>
                     </ul>
                 </div>
@@ -235,7 +238,7 @@
                                         <td><display:column property="startDate" title="Start Date" format="{0,date,dd-MM-yyyy}" sortable="true" /></td> q
                                         <td><display:column property="endDate" title="End Date" format="{0,date,dd-MM-yyyy}" sortable="true" /></td> 
                                         <td><display:column property="status" title="Status" sortable="true" /></td>
-                                        
+
 
 
                                         <display:setProperty name="paging.banner.no_items_found" value='<span class="pagebanner">No {0} found.</span>' />
@@ -284,56 +287,51 @@
                 <div class="container">
                     <div class="row">
                         <div class="row">
-                        <div class="span3">
-                            <h4>
-                                About Work To Worker</h4>
-                            <ul>
-                                <li><a href="javascript:;">Web Development Application</a></li>
-                                <li><a href="javascript:;">Responsive Web </a></li>
-                                <li><a href="javascript:;">Project</a></li>
-                            </ul>
+                            <div class="span3">
+                                <h4>
+                                    About Work To Worker</h4>
+                                <ul>
+                                    <li><a href="javascript:;">Web Development Application</a></li>
+                                    <li><a href="javascript:;">Responsive Web </a></li>
+                                    <li><a href="javascript:;">Project</a></li>
+                                </ul>
+                            </div>
+                            <!-- /span3 -->
+                            <div class="span3">
+                                <h4>
+                                    Legal</h4>
+                                <ul>
+                                    <li><a href="javascript:;">Read License</a></li>
+                                    <li><a href="javascript:;">Terms of Use</a></li>
+                                    <li><a href="javascript:;">Privacy Policy</a></li>
+                                </ul>
+                            </div>
+                            <!-- /span3 -->
                         </div>
-                        <!-- /span3 -->
-                        <div class="span3">
-                            <h4>
-                                 Legal</h4>
-                            <ul>
-                                <li><a href="javascript:;">Read License</a></li>
-                                <li><a href="javascript:;">Terms of Use</a></li>
-                                <li><a href="javascript:;">Privacy Policy</a></li>
-                            </ul>
+                        <!-- /row -->
+                    </div>
+                    <!-- /container -->
+                </div>
+                <!-- /extra-inner -->
+            </div>
+            <!-- /extra -->
+            <div class="footer">
+                <div class="footer-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="span12"> &copy; 2013 <a href="http://www.egrappler.com/">Bootstrap Responsive Admin Template</a>. </div>
+                            <!-- /span12 -->
                         </div>
-                        <!-- /span3 -->
+                        <!-- /row -->
                     </div>
-                    <!-- /row -->
+                    <!-- /container -->
                 </div>
-                <!-- /container -->
+                <!-- /footer-inner -->
             </div>
-            <!-- /extra-inner -->
-        </div>
-        <!-- /extra -->
-        <div class="footer">
-            <div class="footer-inner">
-                <div class="container">
-                    <div class="row">
-                        <div class="span12"> &copy; 2013 <a href="http://www.egrappler.com/">Bootstrap Responsive Admin Template</a>. </div>
-                        <!-- /span12 -->
-                    </div>
-                    <!-- /row -->
-                </div>
-                <!-- /container -->
-            </div>
-            <!-- /footer-inner -->
-        </div>
-        <!-- /footer -->
-        <!-- Le javascript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        
-        <script src="js/excanvas.min.js"></script>
-       
-        <script src="js/full-calendar/fullcalendar.min.js"></script>
-        <script src="js/bootstrap.js"></script>
-        <script src="js/base.js"></script>
+            <!-- /footer -->
+            <!-- Le javascript
+            ================================================== -->
+            <!-- Placed at the end of the document so the pages load faster -->
+
     </body>
 </html>
